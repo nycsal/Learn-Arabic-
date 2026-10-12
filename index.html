@@ -1,1 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFC93C">
+<title>Learn Arabic with Kaka</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='54' r='42' fill='%23FFC93C'/%3E%3Ccircle cx='36' cy='48' r='6' fill='%232B2A4C'/%3E%3Ccircle cx='64' cy='48' r='6' fill='%232B2A4C'/%3E%3Cpath d='M32 62 Q50 84 68 62 Z' fill='%238A2B3D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F9FF; --surface: #FFFFFF; --ink: #2B2A4C; --muted: #625F8A; --line: #D9E4F5;
+    --brand: #6A4BF0; --brand-ink: #FFFFFF; --soft: #ECE8FF;
+    --sun: #FFC93C; --band-ink: #2B2A4C;
+    --mint: #17A57F; --mint-soft: #D9F6EC;
+    --sky: #1E98E0; --sky-soft: #DCF1FF;
+    --coral: #E8523F; --coral-soft: #FFE4DF;
+    --good: #12805C; --good-soft: #D9F6EC; --bad: #C4372B; --bad-soft: #FFE4DF; --gold: #F59E0B;
+    --outer: #DCE9F7;
+    --f-head: "Baloo 2", "Nunito", system-ui, sans-serif;
+    --f-ui: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-ar: "Cairo", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif;
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14132E; --surface: #201F48; --ink: #F4F3FF; --muted: #ABA9D6; --line: #35346B;
+      --brand: #A08EFF; --brand-ink: #14132E; --soft: #2D2B63;
+      --mint: #3FD9AE; --mint-soft: #123B35; --sky: #5CC2FF; --sky-soft: #14364F; --coral: #FF8D7E; --coral-soft: #4A2320;
+      --good: #4FD6A0; --good-soft: #123B35; --bad: #FF8F86; --bad-soft: #4A2320; --gold: #FFC24D; --outer: #0B0A1F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14132E; --surface: #201F48; --ink: #F4F3FF; --muted: #ABA9D6; --line: #35346B;
+    --brand: #A08EFF; --brand-ink: #14132E; --soft: #2D2B63;
+    --mint: #3FD9AE; --mint-soft: #123B35; --sky: #5CC2FF; --sky-soft: #14364F; --coral: #FF8D7E; --coral-soft: #4A2320;
+    --good: #4FD6A0; --good-soft: #123B35; --bad: #FF8F86; --bad-soft: #4A2320; --gold: #FFC24D; --outer: #0B0A1F;
+  }
+  .lv0 { --lv: var(--mint); --lv-soft: var(--mint-soft); }
+  .lv1 { --lv: var(--sky); --lv-soft: var(--sky-soft); }
+  .lv2 { --lv: var(--coral); --lv-soft: var(--coral-soft); }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--outer); color: var(--ink); font-family: var(--f-ui); font-size: 16px; line-height: 1.45; font-weight: 600; }
+  button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  button:focus-visible, a:focus-visible, input:focus-visible, .fcard:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+  a { color: var(--brand); }
+  h1, h2, h3 { font-family: var(--f-head); }
+
+  #shell { max-width: 480px; margin: 0 auto; min-height: 100vh; min-height: 100dvh; background: var(--bg); position: relative; padding-bottom: 96px; box-shadow: 0 0 0 1px var(--line); }
+  .ar { direction: rtl; unicode-bidi: isolate; font-family: var(--f-ar); font-weight: 700; }
+  .kaka { display: block; overflow: visible; }
+  .hop { animation: hop 2.4s ease-in-out infinite; transform-origin: 50% 100%; }
+  @keyframes hop { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+
+  /* ---------- welcome ---------- */
+  .welcome { padding: calc(30px + env(safe-area-inset-top, 0px)) 24px 40px; text-align: center; }
+  .welcome .kaka { margin: 0 auto 6px; }
+  .welcome .hi { font-size: 3.2rem; line-height: 1.5; color: var(--brand); }
+  .welcome h1 { font-size: 2.2rem; line-height: 1.05; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .welcome h1 em { font-style: normal; color: var(--coral); }
+  .lead { color: var(--muted); margin: 0 auto 22px; max-width: 32ch; }
+  .who { margin-bottom: 20px; }
+  .who .lab { font-weight: 800; margin-bottom: 8px; }
+  .chip { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 10px 18px; margin: 0 6px 8px; font-weight: 700; }
+  .chip:hover { border-color: var(--brand); }
+  .field { text-align: left; }
+  .field label { display: block; font-weight: 800; margin-bottom: 8px; }
+  .field input { width: 100%; padding: 15px 16px; border-radius: 18px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 1.1rem; font-weight: 700; }
+  .welcome .btn { width: 100%; margin-top: 12px; }
+  .fine { color: var(--muted); font-size: .88rem; margin: 14px 0 0; font-weight: 600; }
+
+  /* ---------- buttons ---------- */
+  .btn { border: none; background: var(--brand); color: var(--brand-ink); border-radius: 18px; padding: 15px 20px; font-weight: 800; font-size: 1.05rem; box-shadow: 0 4px 0 rgba(0,0,0,.18); transition: transform .08s ease, box-shadow .08s ease; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,.18); }
+  .btn.ghost { background: var(--surface); color: var(--ink); border: 2px solid var(--line); box-shadow: 0 3px 0 var(--line); }
+  .btn.soft { background: var(--soft); color: var(--ink); box-shadow: 0 3px 0 rgba(106,75,240,.2); }
+  .btn.warn { background: var(--bad); color: #fff; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  .btn.mic { background: var(--sun); color: #2A1B00; width: 100%; padding: 17px; font-size: 1.1rem; }
+  .btn.mic.rec { animation: pulse 1.1s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 4px 0 rgba(0,0,0,.18), 0 0 0 0 rgba(255,201,60,.7); } 50% { box-shadow: 0 4px 0 rgba(0,0,0,.18), 0 0 0 14px rgba(255,201,60,0); } }
+  .iconbtn { width: 44px; height: 44px; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; padding: 0; }
+  .roundbtn { width: 52px; height: 52px; border-radius: 50%; border: none; background: var(--sun); font-size: 22px; display: grid; place-items: center; padding: 0; position: absolute; top: 14px; right: 14px; box-shadow: 0 3px 0 rgba(0,0,0,.15); }
+  .mini { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--soft); font-size: 16px; display: grid; place-items: center; padding: 0; flex: none; }
+
+  /* ---------- home ---------- */
+  .band { background: var(--sun); color: var(--band-ink); padding: calc(14px + env(safe-area-inset-top, 0px)) 18px 54px; border-radius: 0 0 36px 36px; position: relative; overflow: hidden; }
+  .band::before, .band::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.28); }
+  .band::before { width: 150px; height: 150px; right: -40px; top: -50px; }
+  .band::after { width: 90px; height: 90px; left: -30px; bottom: -34px; }
+  .band > * { position: relative; z-index: 1; }
+  .toprow { display: flex; align-items: center; gap: 10px; }
+  .brand { flex: 1; line-height: 1; }
+  .brand .a { font-family: var(--f-head); font-weight: 800; font-size: 1.7rem; letter-spacing: -0.01em; }
+  .brand .b { font-family: var(--f-head); font-weight: 700; font-size: 1.05rem; color: #7A3FE0; }
+  .streak { background: #fff; border-radius: 999px; padding: 7px 12px; font-weight: 800; font-size: .92rem; white-space: nowrap; color: #2B2A4C; }
+  .bubble { margin-top: 12px; background: #fff; color: #2B2A4C; border-radius: 20px 20px 20px 6px; padding: 10px 14px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .bubble .ar { font-size: 1.4rem; color: #6A4BF0; }
+  .cont { display: flex; align-items: center; justify-content: space-between; width: calc(100% - 32px); margin: -30px 16px 0; position: relative; background: var(--surface); border: 2px solid var(--line); border-radius: 24px; padding: 14px 16px; text-align: left; box-shadow: 0 8px 0 -2px var(--line); }
+  .cont .k { color: var(--brand); font-weight: 800; font-size: .85rem; }
+  .cont .t { font-family: var(--f-head); font-weight: 700; font-size: 1.2rem; line-height: 1.2; }
+  .cont .m { color: var(--muted); font-size: .9rem; }
+  .cont .go { width: 46px; height: 46px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-size: 1.6rem; font-weight: 800; flex: none; }
+  .cont.done { justify-content: center; font-weight: 800; }
+  .potd { margin: 16px 16px 0; background: var(--soft); border-radius: 22px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; text-align: left; width: calc(100% - 32px); border: none; }
+  .potd .k { color: var(--brand); font-weight: 800; font-size: .82rem; }
+  .potd .ar { font-size: 1.6rem; line-height: 1.5; }
+  .potd .tx { flex: 1; min-width: 0; }
+  .potd .b { color: var(--muted); font-size: .92rem; }
+  .overall { margin: 18px 20px 4px; }
+  .overall .row { display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 6px; }
+  .bar { height: 12px; background: var(--line); border-radius: 6px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--lv, var(--brand)); border-radius: 6px; transition: width .3s ease; }
+  .level { padding: 20px 16px 0; }
+  .lh { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+  .lh h2 { margin: 0; font-size: 1.45rem; color: var(--lv); }
+  .lh span { color: var(--muted); font-weight: 800; }
+  .level > p { margin: 0 4px 10px; color: var(--muted); font-size: .92rem; }
+  .tile { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: 22px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 4px 0 var(--line); }
+  .tile .ic { width: 50px; height: 50px; border-radius: 18px; background: var(--lv-soft); display: grid; place-items: center; font-size: 26px; flex: none; }
+  .tile .tx { flex: 1; min-width: 0; }
+  .tile .tt { font-weight: 800; }
+  .tile .mm { color: var(--muted); font-size: .88rem; }
+  .tile.locked { opacity: .55; }
+  .tile.finished { border-color: var(--lv); }
+  .stars { color: var(--gold); letter-spacing: 1px; font-size: 1.1rem; }
+  .pill { background: var(--lv); color: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: .78rem; font-weight: 800; white-space: nowrap; }
+  .pill.soft { background: var(--lv-soft); color: var(--ink); }
+  .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 22px 16px 0; }
+  .extra { border: none; border-radius: 22px; padding: 16px 12px; text-align: left; color: #2B2A4C; box-shadow: 0 5px 0 rgba(0,0,0,.14); }
+  .extra.x1 { background: #FFB3A7; } .extra.x2 { background: #B9A8FF; }
+  .extra .e { font-size: 1.8rem; } .extra .t { font-family: var(--f-head); font-weight: 800; font-size: 1.15rem; line-height: 1.15; margin-top: 4px; }
+  .extra .m { font-size: .85rem; font-weight: 700; opacity: .85; }
+
+  /* ---------- lesson ---------- */
+  .lhead { display: flex; align-items: center; gap: 12px; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 8px; }
+  .lt .k { color: var(--lv); font-weight: 800; font-size: .85rem; }
+  .lt .t { font-family: var(--f-head); font-weight: 700; font-size: 1.35rem; line-height: 1.1; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 16px 4px; }
+  .step { border: none; background: var(--surface); border-radius: 14px; padding: 10px 4px; font-weight: 800; color: var(--muted); border-bottom: 4px solid var(--line); }
+  .step.on { color: var(--ink); border-bottom-color: var(--lv); background: var(--lv-soft); }
+  .body { padding: 10px 16px 24px; }
+  .tip { background: var(--lv-soft); border-radius: 16px; padding: 10px 14px; margin: 0 0 12px; font-size: .92rem; }
+  .count { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 800; color: var(--muted); }
+  .count .bar { flex: 1; }
+  .fcard { background: var(--surface); border: 2px solid var(--line); border-radius: 30px; min-height: 340px; padding: 70px 20px 26px; text-align: center; position: relative; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; box-shadow: 0 8px 0 var(--lv-soft); }
+  .fcard .big { font-size: clamp(3rem, 16vw, 4.4rem); line-height: 1.5; color: var(--ink); }
+  .fcard .big.l { font-size: clamp(2.1rem, 10vw, 2.9rem); }
+  .fcard .big.m { font-size: clamp(1.5rem, 7.5vw, 2rem); }
+  .tr { color: var(--brand); font-weight: 800; font-size: 1.3rem; }
+  .en { color: var(--muted); font-size: 1.2rem; font-weight: 700; }
+  .links { margin-top: 14px; font-size: .85rem; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .nudge { animation: nudge 1.3s ease-in-out .6s 2; }
+  @keyframes nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-16px) rotate(-1deg); } 75% { transform: translateX(16px) rotate(1deg); } }
+  .hintline { text-align: center; color: var(--muted); font-size: .88rem; margin: 14px 0; }
+  .navrow { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; }
+  .notice { background: var(--coral-soft); border-radius: 16px; padding: 10px 14px; font-size: .9rem; margin-bottom: 12px; }
+  .speaking .roundbtn, .speaking .mini { animation: pulse2 .9s ease-in-out infinite; }
+  @keyframes pulse2 { 0%,100% { box-shadow: 0 0 0 0 rgba(120,100,240,.4); } 50% { box-shadow: 0 0 0 10px rgba(120,100,240,0); } }
+
+  .qcard { background: var(--surface); border: 2px solid var(--line); border-radius: 28px; padding: 22px 18px; text-align: center; margin-bottom: 14px; min-height: 190px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 6px 0 var(--lv-soft); }
+  .qcard .big { font-size: 3.2rem; line-height: 1.5; }
+  .qcard .big.l { font-size: 2.2rem; } .qcard .big.m { font-size: 1.6rem; }
+  .qlab { color: var(--muted); font-weight: 700; }
+  .qen { font-family: var(--f-head); font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+  .bigplay { width: 80px; height: 80px; border-radius: 50%; border: none; background: var(--sun); font-size: 34px; display: grid; place-items: center; box-shadow: 0 5px 0 rgba(0,0,0,.15); }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: center; border: 2px solid var(--line); background: var(--surface); border-radius: 18px; padding: 15px 14px; font-weight: 700; font-size: 1.08rem; box-shadow: 0 4px 0 var(--line); }
+  .opt .ar { font-size: 1.7rem; line-height: 1.5; }
+  .opt:not(:disabled):hover { border-color: var(--brand); }
+  .opt.right { border-color: var(--good); background: var(--good-soft); box-shadow: 0 4px 0 var(--good); }
+  .opt.wrong { border-color: var(--bad); background: var(--bad-soft); box-shadow: 0 4px 0 var(--bad); }
+  .opt:disabled { cursor: default; }
+  .fb { margin: 14px 0 10px; padding: 12px 14px; border-radius: 16px; font-weight: 800; }
+  .fb.good { background: var(--good-soft); color: var(--good); }
+  .fb.bad { background: var(--bad-soft); color: var(--bad); }
+  .fb small { display: block; font-weight: 700; color: var(--ink); margin-top: 2px; font-size: .95rem; }
+  .results { text-align: center; padding-top: 10px; }
+  .results .kaka { margin: 0 auto; }
+  .results .score { font-family: var(--f-head); font-size: 4rem; font-weight: 800; line-height: 1; }
+  .results .stars { font-size: 2.4rem; margin: 6px 0; display: block; }
+  .results p { color: var(--muted); margin: 6px 0; }
+  .results h2 { margin: 4px 0; font-size: 1.6rem; }
+  .stack { display: grid; gap: 10px; margin-top: 14px; }
+  .popin { animation: pop .5s cubic-bezier(.2,1.4,.4,1); }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .result { margin-top: 16px; border-top: 2px solid var(--line); padding-top: 12px; min-height: 3.4em; text-align: left; }
+  .result .v { font-weight: 800; font-size: 1.1rem; }
+  .result .v.good { color: var(--good); } .result .v.warn { color: var(--gold); } .result .v.bad { color: var(--bad); }
+  .result .h { color: var(--muted); overflow-wrap: anywhere; }
+  .result .h b { color: var(--ink); }
+
+  /* ---------- phrases / words / me ---------- */
+  .page { padding: calc(18px + env(safe-area-inset-top, 0px)) 16px 24px; }
+  .page h1 { font-size: 1.9rem; margin: 0 0 4px; line-height: 1.1; }
+  .page .sub { color: var(--muted); margin: 0 0 12px; }
+  .tabs2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--soft); border-radius: 18px; padding: 5px; margin-bottom: 12px; }
+  .tabs2 button { border: none; background: transparent; border-radius: 14px; padding: 10px 6px; font-weight: 800; color: var(--muted); }
+  .tabs2 button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 2px 0 rgba(0,0,0,.1); }
+  .search { width: 100%; padding: 13px 16px; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-weight: 700; margin-bottom: 8px; }
+  .wgroup { margin-top: 18px; }
+  .wgroup h3 { margin: 0 0 8px; font-size: 1.1rem; color: var(--brand); }
+  .wrow { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 10px 14px; margin-bottom: 8px; }
+  .wrow .ar { font-size: 1.5rem; min-width: 84px; line-height: 1.6; text-align: right; }
+  .wrow .tx { flex: 1; min-width: 0; }
+  .wrow .a { font-weight: 800; color: var(--brand); font-size: .95rem; }
+  .wrow .b { color: var(--muted); font-size: .92rem; }
+  .empty { color: var(--muted); text-align: center; padding: 30px 0; }
+  .phr { background: var(--surface); border: 2px solid var(--line); border-radius: 20px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; }
+  .phr .tx { flex: 1; min-width: 0; }
+  .phr .ar { font-size: 1.45rem; line-height: 1.6; }
+  .phr .a { font-weight: 800; color: var(--brand); font-size: .95rem; }
+  .phr .b { color: var(--muted); font-size: .92rem; }
+  .qa { background: var(--surface); border: 2px solid var(--line); border-radius: 22px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 4px 0 var(--line); }
+  .qa .n { font-weight: 800; color: var(--muted); font-size: .8rem; }
+  .qrow, .arow { display: flex; align-items: flex-start; gap: 10px; }
+  .qrow .ar, .arow .ar { font-size: 1.4rem; line-height: 1.6; }
+  .arow { margin-top: 10px; padding: 10px; background: var(--good-soft); border-radius: 16px; }
+  .qa .a { font-weight: 800; color: var(--brand); font-size: .92rem; }
+  .qa .b { color: var(--muted); font-size: .92rem; }
+  .arow .a { color: var(--good); }
+  .reveal { margin-top: 10px; width: 100%; border: 2px dashed var(--brand); background: transparent; color: var(--brand); border-radius: 16px; padding: 10px; font-weight: 800; }
+  .card2 { background: var(--surface); border: 2px solid var(--line); border-radius: 22px; padding: 14px 16px; margin-bottom: 14px; }
+  .card2 h2 { font-size: 1.15rem; margin: 0 0 8px; }
+  .row2 { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 2px solid var(--line); }
+  .row2:first-of-type { border-top: none; }
+  .row2 small { display: block; color: var(--muted); font-weight: 600; }
+  .sw { width: 54px; height: 32px; border-radius: 16px; border: none; background: var(--line); position: relative; flex: none; padding: 0; transition: background .2s; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+  .sw[aria-checked="true"] { background: var(--mint); }
+  .sw[aria-checked="true"]::after { transform: translateX(22px); }
+  .links2 a { display: block; padding: 8px 0; border-top: 2px solid var(--line); text-decoration: none; font-weight: 800; }
+  .links2 a small { display: block; color: var(--muted); font-weight: 600; }
+  .prof { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .prof .n { font-family: var(--f-head); font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
+  .prof .m { color: var(--muted); }
+
+  /* ---------- tabs & toast ---------- */
+  #tabs { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: min(480px, 100%); background: var(--surface); border-top: 2px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px)); z-index: 5; }
+  #tabs[hidden] { display: none; }
+  #tabs button { border: none; background: none; display: grid; justify-items: center; gap: 2px; padding: 6px; border-radius: 14px; color: var(--muted); font-size: .78rem; font-weight: 800; }
+  #tabs button[aria-current="page"] { color: var(--brand); background: var(--soft); }
+  #toast { position: fixed; left: 50%; bottom: calc(104px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-weight: 700; opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 10; max-width: 90%; text-align: center; }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div id="shell">
+  <div id="app"></div>
+  <nav id="tabs" aria-label="Main" hidden></nav>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px">This app needs JavaScript.</p></noscript>
+
+<!-- ======================= DATA ======================= -->
+<script id="data">
+/* Lesson item: [Arabic, transliteration, English, optional accepted mic alternatives]. */
+const mk = (level, title, icon, tip, items) => ({ level, title, icon, tip, items });
+
+const LESSONS = [
+/* ================= BEGINNER ================= */
+mk(0, "Pronouns & Little Words", "🙋", "Arabic has no 'am / is / are' in the present: just say 'I student'. There is no 'it'. Things are he (هو) or she (هي).", [
+  ["أنا", "anā", "I"],
+  ["أنتَ", "anta", "you (masc.)"],
+  ["أنتِ", "anti", "you (fem.)"],
+  ["هو", "huwa", "he / it (masc.)"],
+  ["هي", "hiya", "she / it (fem.)"],
+  ["نحن", "naḥnu", "we"],
+  ["أنتم", "antum", "you (plural)"],
+  ["هم", "hum", "they (masc.)"],
+  ["هنّ", "hunna", "they (fem.)"],
+  ["أنتما", "antumā", "you two"],
+  ["هذا", "hādhā", "this (masc.)"],
+  ["هذه", "hādhihi", "this (fem.)"],
+  ["ذلك", "dhālika", "that (masc.)"],
+  ["تلك", "tilka", "that (fem.)"],
+  ["هؤلاء", "hāʾulāʾi", "these"],
+  ["كتابي", "kitābī", "my book"],
+  ["كتابك", "kitābuka", "your book (m.)"],
+  ["كتابه", "kitābuhu", "his book"],
+  ["كتابها", "kitābuhā", "her book"],
+  ["كتابنا", "kitābunā", "our book"],
+  ["هنا", "hunā", "here"],
+  ["هناك", "hunāka", "there"],
+  ["و", "wa", "and"],
+  ["أو", "aw", "or"],
+  ["لكن", "lākin", "but"],
+  ["مع", "maʿa", "with"],
+  ["بدون", "bidūn", "without"],
+  ["جدًا", "jiddan", "very"],
+  ["أيضًا", "aydan", "also / too"],
+  ["فقط", "faqaṭ", "only"]
+]),
+mk(0, "Greetings & Manners", "👋", "The classic greeting السلام عليكم is answered with وعليكم السلام. Use it any time of day.", [
+  ["مرحبًا", "marḥaban", "hello"],
+  ["السلام عليكم", "as-salāmu ʿalaykum", "peace be upon you"],
+  ["وعليكم السلام", "wa ʿalaykumu s-salām", "and upon you peace"],
+  ["أهلاً وسهلاً", "ahlan wa sahlan", "welcome"],
+  ["أهلاً بك", "ahlan bik", "hi / welcome (to you)"],
+  ["صباح الخير", "ṣabāḥ al-khayr", "good morning"],
+  ["صباح النور", "ṣabāḥ an-nūr", "good morning (reply)"],
+  ["مساء الخير", "masāʾ al-khayr", "good evening"],
+  ["مساء النور", "masāʾ an-nūr", "good evening (reply)"],
+  ["تصبح على خير", "tuṣbiḥ ʿalā khayr", "good night"],
+  ["مع السلامة", "maʿa s-salāma", "goodbye"],
+  ["إلى اللقاء", "ilā l-liqāʾ", "see you again"],
+  ["شكرًا", "shukran", "thank you"],
+  ["شكرًا جزيلاً", "shukran jazīlan", "thank you very much"],
+  ["من فضلك", "min faḍlak", "please"],
+  ["عفوًا", "ʿafwan", "you're welcome / excuse me"],
+  ["نعم", "naʿam", "yes"],
+  ["لا", "lā", "no"],
+  ["كيف حالك؟", "kayfa ḥāluk?", "How are you?"],
+  ["أنا بخير", "anā bi-khayr", "I'm fine"],
+  ["بخير والحمد لله", "bi-khayr wa-l-ḥamdu lillāh", "Fine, thank God"],
+  ["ما اسمك؟", "mā ismuk?", "What is your name?"],
+  ["اسمي سارة", "ismī Sāra", "My name is Sara."],
+  ["تشرفنا", "tasharrafnā", "Nice to meet you."],
+  ["آسف", "āsif", "sorry (m.)"],
+  ["آسفة", "āsifa", "sorry (f.)"],
+  ["لا بأس", "lā baʾs", "no problem / it's okay"],
+  ["بالطبع", "bi-ṭ-ṭabʿ", "of course"],
+  ["حسنًا", "ḥasanan", "okay / fine"],
+  ["معذرة", "maʿdhira", "pardon me"]
+]),
+mk(0, "Numbers & Colors", "🔢", "Numbers 11 to 19 end in عشر (ʿashar), 'ten'. Colors agree with the noun in gender. These are masculine forms.", [
+  ["صفر", "ṣifr", "zero", "0"],
+  ["واحد", "wāḥid", "one", "1"],
+  ["اثنان", "ithnān", "two", "2"],
+  ["ثلاثة", "thalātha", "three", "3"],
+  ["أربعة", "arbaʿa", "four", "4"],
+  ["خمسة", "khamsa", "five", "5"],
+  ["ستة", "sitta", "six", "6"],
+  ["سبعة", "sabʿa", "seven", "7"],
+  ["ثمانية", "thamāniya", "eight", "8"],
+  ["تسعة", "tisʿa", "nine", "9"],
+  ["عشرة", "ʿashara", "ten", "10"],
+  ["أحد عشر", "aḥada ʿashar", "eleven", "11"],
+  ["اثنا عشر", "ithnā ʿashar", "twelve", "12"],
+  ["ثلاثة عشر", "thalāthata ʿashar", "thirteen", "13"],
+  ["أربعة عشر", "arbaʿata ʿashar", "fourteen", "14"],
+  ["خمسة عشر", "khamsata ʿashar", "fifteen", "15"],
+  ["ستة عشر", "sittata ʿashar", "sixteen", "16"],
+  ["سبعة عشر", "sabʿata ʿashar", "seventeen", "17"],
+  ["ثمانية عشر", "thamāniyata ʿashar", "eighteen", "18"],
+  ["تسعة عشر", "tisʿata ʿashar", "nineteen", "19"],
+  ["عشرون", "ʿishrūn", "twenty", "20"],
+  ["ثلاثون", "thalāthūn", "thirty", "30"],
+  ["أربعون", "arbaʿūn", "forty", "40"],
+  ["خمسون", "khamsūn", "fifty", "50"],
+  ["ستون", "sittūn", "sixty", "60"],
+  ["سبعون", "sabʿūn", "seventy", "70"],
+  ["ثمانون", "thamānūn", "eighty", "80"],
+  ["تسعون", "tisʿūn", "ninety", "90"],
+  ["مئة", "miʾa", "one hundred", "100"],
+  ["ألف", "alf", "one thousand", "1000"],
+  ["أحمر", "aḥmar", "red"],
+  ["أزرق", "azraq", "blue"],
+  ["أخضر", "akhḍar", "green"],
+  ["أصفر", "aṣfar", "yellow"],
+  ["أسود", "aswad", "black"],
+  ["أبيض", "abyaḍ", "white"],
+  ["برتقالي", "burtuqālī", "orange"],
+  ["بنفسجي", "banafsajī", "purple"],
+  ["وردي", "wardī", "pink"],
+  ["بني", "bunnī", "brown"],
+  ["رمادي", "ramādī", "gray"]
+]),
+mk(0, "Family & People", "👨‍👩‍👧", "Many Arabic nouns have a feminine form ending in ة (-a): صديق / صديقة. Arabic has separate words for each uncle and aunt.", [
+  ["عائلة", "ʿāʾila", "family"],
+  ["أب", "ab", "father"],
+  ["أم", "umm", "mother"],
+  ["أخ", "akh", "brother"],
+  ["أخت", "ukht", "sister"],
+  ["ابن", "ibn", "son"],
+  ["ابنة", "ibna", "daughter"],
+  ["زوج", "zawj", "husband"],
+  ["زوجة", "zawja", "wife"],
+  ["جد", "jadd", "grandfather"],
+  ["جدة", "jadda", "grandmother"],
+  ["عم", "ʿamm", "uncle (father's brother)"],
+  ["عمة", "ʿamma", "aunt (father's sister)"],
+  ["خال", "khāl", "uncle (mother's brother)"],
+  ["خالة", "khāla", "aunt (mother's sister)"],
+  ["صديق", "ṣadīq", "friend (m.)"],
+  ["صديقة", "ṣadīqa", "friend (f.)"],
+  ["رجل", "rajul", "man"],
+  ["امرأة", "imraʾa", "woman"],
+  ["طفل", "ṭifl", "child"],
+  ["أولاد", "awlād", "children / boys"],
+  ["ولد", "walad", "boy"],
+  ["بنت", "bint", "girl"],
+  ["شاب", "shābb", "young man"],
+  ["فتاة", "fatāh", "young woman"],
+  ["ناس", "nās", "people"],
+  ["جار", "jār", "neighbor"],
+  ["ضيف", "ḍayf", "guest"],
+  ["معلم", "muʿallim", "teacher"],
+  ["طالب", "ṭālib", "student"],
+  ["طبيب", "ṭabīb", "doctor"],
+  ["مهندس", "muhandis", "engineer"],
+  ["عامل", "ʿāmil", "worker"],
+  ["شرطي", "shurṭī", "police officer"]
+]),
+mk(0, "First Sentences", "💬", "Sentences without a verb are normal. هذا كتاب = 'this book' means 'this is a book'. To say 'not', use لست (lastu) or ليس (laysa).", [
+  ["هذا كتاب", "hādhā kitāb", "This is a book."],
+  ["ما هذا؟", "mā hādhā?", "What is this?"],
+  ["من هذا؟", "man hādhā?", "Who is this?"],
+  ["هذه سيارة", "hādhihi sayyāra", "This is a car."],
+  ["أنا طالب", "anā ṭālib", "I am a student."],
+  ["هي معلمة", "hiya muʿallima", "She is a teacher."],
+  ["هو هنا", "huwa hunā", "He is here."],
+  ["نحن أصدقاء", "naḥnu aṣdiqāʾ", "We are friends."],
+  ["أنا أريد ماء", "anā urīdu māʾ", "I want water."],
+  ["أين أنت؟", "ayna anta?", "Where are you?"],
+  ["أين البيت؟", "ayna l-bayt?", "Where is the house?"],
+  ["هذا البيت كبير", "hādhā l-bayt kabīr", "This house is big."],
+  ["البيت جميل", "al-bayt jamīl", "The house is beautiful."],
+  ["أنا جائع", "anā jāʾiʿ", "I am hungry."],
+  ["أنا عطشان", "anā ʿaṭshān", "I am thirsty."],
+  ["أنا سعيد", "anā saʿīd", "I am happy."],
+  ["أنا متعب", "anā mutʿab", "I am tired."],
+  ["كتابي هنا", "kitābī hunā", "My book is here."],
+  ["هو جيد", "huwa jayyid", "He is good."],
+  ["نحن هنا", "naḥnu hunā", "We are here."],
+  ["هي جميلة", "hiya jamīla", "She is beautiful."],
+  ["هل أنت طالب؟", "hal anta ṭālib?", "Are you a student?"],
+  ["نعم، أنا طالب", "naʿam, anā ṭālib", "Yes, I am a student."],
+  ["لا، لست طالبًا", "lā, lastu ṭāliban", "No, I'm not a student."],
+  ["هذا ليس كتابًا", "hādhā laysa kitāban", "This is not a book."],
+  ["عندي كتاب", "ʿindī kitāb", "I have a book."],
+  ["ليس عندي وقت", "laysa ʿindī waqt", "I don't have time."],
+  ["الولد في المدرسة", "al-walad fī l-madrasa", "The boy is at school."],
+  ["أمي في البيت", "ummī fī l-bayt", "My mother is at home."],
+  ["أبي طبيب", "abī ṭabīb", "My father is a doctor."],
+  ["أنا من أمريكا", "anā min amrīkā", "I am from America."],
+  ["أنا أتكلم الإنجليزية", "anā atakallam al-injlīziyya", "I speak English."]
+]),
+
+/* ================= INTERMEDIATE ================= */
+mk(1, "Food & Drink", "🍽️", "Meals: فطور breakfast, غداء lunch, عشاء dinner. Hospitality (ضيافة) is central to Arab culture, so expect to be offered tea and food.", [
+  ["طعام", "ṭaʿām", "food"],
+  ["ماء", "māʾ", "water"],
+  ["خبز", "khubz", "bread"],
+  ["شاي", "shāy", "tea"],
+  ["قهوة", "qahwa", "coffee"],
+  ["حليب", "ḥalīb", "milk"],
+  ["عصير", "ʿaṣīr", "juice"],
+  ["أرز", "aruzz", "rice"],
+  ["لحم", "laḥm", "meat"],
+  ["دجاج", "dajāj", "chicken"],
+  ["سمك", "samak", "fish"],
+  ["بيضة", "bayḍa", "egg"],
+  ["جبن", "jubn", "cheese"],
+  ["زبدة", "zubda", "butter"],
+  ["عسل", "ʿasal", "honey"],
+  ["سكر", "sukkar", "sugar"],
+  ["ملح", "milḥ", "salt"],
+  ["فلفل", "filfil", "pepper"],
+  ["زيت", "zayt", "oil"],
+  ["معكرونة", "maʿkarūna", "pasta"],
+  ["شوربة", "shūrba", "soup"],
+  ["سلطة", "salaṭa", "salad"],
+  ["فاكهة", "fākiha", "fruit"],
+  ["خضروات", "khuḍrawāt", "vegetables"],
+  ["تفاحة", "tuffāḥa", "apple"],
+  ["موز", "mawz", "banana"],
+  ["برتقال", "burtuqāl", "orange (fruit)"],
+  ["عنب", "ʿinab", "grapes"],
+  ["تمر", "tamr", "dates"],
+  ["بطيخ", "biṭṭīkh", "watermelon"],
+  ["فراولة", "farāwila", "strawberry"],
+  ["ليمون", "laymūn", "lemon"],
+  ["طماطم", "ṭamāṭim", "tomato"],
+  ["بطاطس", "baṭāṭis", "potato"],
+  ["بصل", "baṣal", "onion"],
+  ["ثوم", "thūm", "garlic"],
+  ["خيار", "khiyār", "cucumber"],
+  ["جزر", "jazar", "carrot"],
+  ["حلوى", "ḥalwā", "sweets / dessert"],
+  ["كعكة", "kaʿka", "cake"],
+  ["شوكولاتة", "shūkūlāta", "chocolate"],
+  ["فطور", "fuṭūr", "breakfast"],
+  ["غداء", "ghadāʾ", "lunch"],
+  ["عشاء", "ʿashāʾ", "dinner"],
+  ["صحن", "ṣaḥn", "plate"],
+  ["كوب", "kūb", "cup / glass"],
+  ["ملعقة", "milʿaqa", "spoon"],
+  ["شوكة", "shawka", "fork"],
+  ["سكين", "sikkīn", "knife"],
+  ["هذا لذيذ", "hādhā ladhīdh", "This is delicious."],
+  ["شاي من فضلك", "shāy min faḍlak", "Tea, please."]
+]),
+mk(1, "Places & Travel", "🧭", "Use أين (ayna) 'where' + the place: أين الفندق؟ 'Where the hotel?'", [
+  ["بيت", "bayt", "house / home"],
+  ["مدينة", "madīna", "city"],
+  ["بلد", "balad", "country"],
+  ["قرية", "qarya", "village"],
+  ["شارع", "shāriʿ", "street"],
+  ["مطار", "maṭār", "airport"],
+  ["فندق", "funduq", "hotel"],
+  ["مطعم", "maṭʿam", "restaurant"],
+  ["سوق", "sūq", "market"],
+  ["مدرسة", "madrasa", "school"],
+  ["جامعة", "jāmiʿa", "university"],
+  ["مستشفى", "mustashfā", "hospital"],
+  ["صيدلية", "ṣaydaliyya", "pharmacy"],
+  ["بنك", "bank", "bank"],
+  ["مسجد", "masjid", "mosque"],
+  ["كنيسة", "kanīsa", "church"],
+  ["متحف", "matḥaf", "museum"],
+  ["مكتبة", "maktaba", "library / bookshop"],
+  ["حديقة", "ḥadīqa", "park / garden"],
+  ["شاطئ", "shāṭiʾ", "beach"],
+  ["بحر", "baḥr", "sea"],
+  ["جبل", "jabal", "mountain"],
+  ["صحراء", "ṣaḥrāʾ", "desert"],
+  ["نهر", "nahr", "river"],
+  ["جسر", "jisr", "bridge"],
+  ["محطة", "maḥaṭṭa", "station"],
+  ["سيارة", "sayyāra", "car"],
+  ["تاكسي", "tāksī", "taxi"],
+  ["حافلة", "ḥāfila", "bus"],
+  ["قطار", "qiṭār", "train"],
+  ["طائرة", "ṭāʾira", "plane"],
+  ["تذكرة", "tadhkira", "ticket"],
+  ["جواز سفر", "jawāz safar", "passport"],
+  ["حقيبة", "ḥaqība", "bag / suitcase"],
+  ["خريطة", "kharīṭa", "map"],
+  ["يمين", "yamīn", "right"],
+  ["يسار", "yasār", "left"],
+  ["مباشرة", "mubāshara", "straight ahead"],
+  ["قريب", "qarīb", "near"],
+  ["بعيد", "baʿīd", "far"],
+  ["شمال", "shamāl", "north"],
+  ["جنوب", "janūb", "south"],
+  ["شرق", "sharq", "east"],
+  ["غرب", "gharb", "west"],
+  ["أين الفندق؟", "ayna l-funduq?", "Where is the hotel?"],
+  ["أريد تذكرة", "urīdu tadhkira", "I want a ticket."],
+  ["أنا ضائع", "anā ḍāʾiʿ", "I am lost. (m.)"]
+]),
+mk(1, "Verbs: I do", "🏃", "Present tense 'I' verbs start with أ (a-). The root letters stay the same across tenses, so learn the root, then the pattern.", [
+  ["أذهب", "adhhab", "I go"],
+  ["آتي", "ātī", "I come"],
+  ["آكل", "ākul", "I eat"],
+  ["أشرب", "ashrab", "I drink"],
+  ["أريد", "urīd", "I want"],
+  ["أعرف", "aʿrif", "I know"],
+  ["أرى", "arā", "I see"],
+  ["أسمع", "asmaʿ", "I hear"],
+  ["أتكلم", "atakallam", "I speak"],
+  ["أكتب", "aktub", "I write"],
+  ["أقرأ", "aqraʾ", "I read"],
+  ["أشتري", "ashtarī", "I buy"],
+  ["أعمل", "aʿmal", "I work"],
+  ["أدرس", "adrus", "I study"],
+  ["أتعلم", "ataʿallam", "I learn"],
+  ["أفهم", "afham", "I understand"],
+  ["لا أفهم", "lā afham", "I don't understand"],
+  ["أحب", "uḥibb", "I like / love"],
+  ["أحتاج", "aḥtāj", "I need"],
+  ["أستطيع", "astaṭīʿ", "I can"],
+  ["أنام", "anām", "I sleep"],
+  ["أستيقظ", "astayqiẓ", "I wake up"],
+  ["أجلس", "ajlis", "I sit"],
+  ["أقف", "aqif", "I stand"],
+  ["أمشي", "amshī", "I walk"],
+  ["أركض", "arkuḍ", "I run"],
+  ["أفتح", "aftaḥ", "I open"],
+  ["أغلق", "aghliq", "I close"],
+  ["أعطي", "uʿṭī", "I give"],
+  ["آخذ", "ākhudh", "I take"],
+  ["أجد", "ajid", "I find"],
+  ["أبحث عن", "abḥath ʿan", "I look for"],
+  ["أنتظر", "antaẓir", "I wait"],
+  ["أسأل", "asʾal", "I ask"],
+  ["أجيب", "ujīb", "I answer"],
+  ["أساعد", "usāʿid", "I help"],
+  ["أسكن", "askun", "I live (reside)"],
+  ["أتصل", "attaṣil", "I call"],
+  ["أطبخ", "aṭbukh", "I cook"],
+  ["أسافر", "usāfir", "I travel"],
+  ["أضحك", "aḍḥak", "I laugh"],
+  ["أفكر", "ufakkir", "I think"],
+  ["أنسى", "ansā", "I forget"],
+  ["أتذكر", "atadhakkar", "I remember"]
+]),
+mk(1, "Time, Weather & Months", "🗓️", "The Arab week starts on Sunday (الأحد, 'the one'). Friday is the main weekend day.", [
+  ["اليوم", "al-yawm", "today"],
+  ["غدًا", "ghadan", "tomorrow"],
+  ["أمس", "ams", "yesterday"],
+  ["بعد الغد", "baʿda l-ghad", "the day after tomorrow"],
+  ["الآن", "al-ān", "now"],
+  ["صباح", "ṣabāḥ", "morning"],
+  ["ظهر", "ẓuhr", "noon"],
+  ["مساء", "masāʾ", "evening"],
+  ["ليل", "layl", "night"],
+  ["ثانية", "thāniya", "second"],
+  ["دقيقة", "daqīqa", "minute"],
+  ["ساعة", "sāʿa", "hour / clock"],
+  ["أسبوع", "usbūʿ", "week"],
+  ["شهر", "shahr", "month"],
+  ["سنة", "sana", "year"],
+  ["عطلة", "ʿuṭla", "holiday / vacation"],
+  ["الأحد", "al-aḥad", "Sunday"],
+  ["الاثنين", "al-ithnayn", "Monday"],
+  ["الثلاثاء", "ath-thulāthāʾ", "Tuesday"],
+  ["الأربعاء", "al-arbiʿāʾ", "Wednesday"],
+  ["الخميس", "al-khamīs", "Thursday"],
+  ["الجمعة", "al-jumʿa", "Friday"],
+  ["السبت", "as-sabt", "Saturday"],
+  ["ربيع", "rabīʿ", "spring"],
+  ["صيف", "ṣayf", "summer"],
+  ["خريف", "kharīf", "autumn"],
+  ["شتاء", "shitāʾ", "winter"],
+  ["طقس", "ṭaqs", "weather"],
+  ["شمس", "shams", "sun"],
+  ["قمر", "qamar", "moon"],
+  ["مطر", "maṭar", "rain"],
+  ["ثلج", "thalj", "snow"],
+  ["ريح", "rīḥ", "wind"],
+  ["غيم", "ghaym", "clouds"],
+  ["يناير", "yanāyir", "January"],
+  ["فبراير", "fibrāyir", "February"],
+  ["مارس", "māris", "March"],
+  ["أبريل", "abrīl", "April"],
+  ["مايو", "māyū", "May"],
+  ["يونيو", "yūniyū", "June"],
+  ["يوليو", "yūliyū", "July"],
+  ["أغسطس", "ughusṭus", "August"],
+  ["سبتمبر", "sibtimbir", "September"],
+  ["أكتوبر", "uktūbar", "October"],
+  ["نوفمبر", "nūfimbir", "November"],
+  ["ديسمبر", "dīsimbir", "December"]
+]),
+mk(1, "Shopping & Questions", "🛍️", "To ask a yes/no question, start with هل (hal). Other question words go at the start too.", [
+  ["ماذا؟", "mādhā?", "what?"],
+  ["من؟", "man?", "who?"],
+  ["أين؟", "ayna?", "where?"],
+  ["متى؟", "matā?", "when?"],
+  ["لماذا؟", "limādhā?", "why?"],
+  ["كيف؟", "kayfa?", "how?"],
+  ["كم؟", "kam?", "how much / how many?"],
+  ["هل؟", "hal?", "(starts a yes/no question)"],
+  ["سعر", "siʿr", "price"],
+  ["غالٍ", "ghālin", "expensive"],
+  ["رخيص", "rakhīṣ", "cheap"],
+  ["نقود", "nuqūd", "money"],
+  ["خصم", "khaṣm", "discount"],
+  ["بطاقة", "biṭāqa", "card"],
+  ["هدية", "hadiyya", "gift"],
+  ["مقاس", "maqāṣ", "size"],
+  ["ملابس", "malābis", "clothes"],
+  ["قميص", "qamīṣ", "shirt"],
+  ["بنطال", "banṭāl", "pants"],
+  ["فستان", "fustān", "dress"],
+  ["حذاء", "ḥidhāʾ", "shoes"],
+  ["قبعة", "qubbaʿa", "hat"],
+  ["معطف", "miʿṭaf", "coat"],
+  ["خاتم", "khātam", "ring"],
+  ["مساعدة", "musāʿada", "help"],
+  ["كم هذا؟", "kam hādhā?", "How much is this?"],
+  ["أريد هذا", "urīdu hādhā", "I want this."],
+  ["سآخذ هذا", "sa-ākhudhu hādhā", "I'll take this."],
+  ["هذا غالٍ جدًا", "hādhā ghālin jiddan", "This is too expensive."],
+  ["هل عندك خصم؟", "hal ʿindaka khaṣm?", "Do you have a discount?"],
+  ["هل يمكنني التجربة؟", "hal yumkinunī t-tajriba?", "Can I try it on?"],
+  ["هل هذا متوفر؟", "hal hādhā mutawaffir?", "Is this available?"],
+  ["أحتاج إلى مساعدة", "aḥtāju ilā musāʿada", "I need help."],
+  ["لا أتكلم العربية جيدًا", "lā atakallamu l-ʿarabiyya jayyidan", "I don't speak Arabic well."],
+  ["هل تتكلم الإنجليزية؟", "hal tatakallamu l-injlīziyya?", "Do you speak English?"],
+  ["الحساب من فضلك", "al-ḥisāb min faḍlak", "The bill, please."]
+]),
+
+/* ================= FINAL ================= */
+mk(2, "Describing Things", "🎨", "Adjectives come after the noun and match its gender: بيت كبير (big house), مدينة كبيرة (big city).", [
+  ["كبير", "kabīr", "big"],
+  ["صغير", "ṣaghīr", "small"],
+  ["طويل", "ṭawīl", "tall / long"],
+  ["قصير", "qaṣīr", "short"],
+  ["جيد", "jayyid", "good"],
+  ["سيئ", "sayyiʾ", "bad"],
+  ["جميل", "jamīl", "beautiful"],
+  ["جديد", "jadīd", "new"],
+  ["قديم", "qadīm", "old"],
+  ["سريع", "sarīʿ", "fast"],
+  ["بطيء", "baṭīʾ", "slow"],
+  ["سهل", "sahl", "easy"],
+  ["صعب", "ṣaʿb", "difficult"],
+  ["حار", "ḥārr", "hot"],
+  ["بارد", "bārid", "cold"],
+  ["ثقيل", "thaqīl", "heavy"],
+  ["خفيف", "khafīf", "light"],
+  ["قوي", "qawī", "strong"],
+  ["ضعيف", "ḍaʿīf", "weak"],
+  ["غني", "ghanī", "rich"],
+  ["فقير", "faqīr", "poor"],
+  ["نظيف", "naẓīf", "clean"],
+  ["وسخ", "wasikh", "dirty"],
+  ["مفتوح", "maftūḥ", "open"],
+  ["مغلق", "mughlaq", "closed"],
+  ["مهم", "muhim", "important"],
+  ["مختلف", "mukhtalif", "different"],
+  ["صحيح", "ṣaḥīḥ", "correct / true"],
+  ["خطأ", "khaṭaʾ", "wrong / mistake"],
+  ["ممتع", "mumtiʿ", "enjoyable / fun"],
+  ["ممل", "mumill", "boring"],
+  ["سعيد", "saʿīd", "happy"],
+  ["حزين", "ḥazīn", "sad"],
+  ["غاضب", "ghāḍib", "angry"],
+  ["خائف", "khāʾif", "afraid"],
+  ["متحمس", "mutaḥammis", "excited"],
+  ["مشغول", "mashghūl", "busy"],
+  ["تعبان", "taʿbān", "tired"],
+  ["جائع", "jāʾiʿ", "hungry"],
+  ["عطشان", "ʿaṭshān", "thirsty"],
+  ["ذكي", "dhakī", "smart"],
+  ["لطيف", "laṭīf", "kind / nice"],
+  ["مضحك", "muḍḥik", "funny"],
+  ["مريض", "marīḍ", "sick"],
+  ["الطقس بارد", "aṭ-ṭaqs bārid", "The weather is cold."],
+  ["هذا جميل جدًا", "hādhā jamīl jiddan", "This is very beautiful."]
+]),
+mk(2, "Past & Future", "⏳", "Past: the verb takes endings (-tu = I, -nā = we). Future: add سـ (sa-) or سوف (sawfa) before the present verb.", [
+  ["ذهبت أمس إلى السوق", "dhahabtu ams ilā s-sūq", "Yesterday I went to the market."],
+  ["أكلت الطعام", "akaltu ṭ-ṭaʿām", "I ate the food."],
+  ["هو جاء", "huwa jāʾa", "He came."],
+  ["نحن رأينا", "naḥnu raʾaynā", "We saw."],
+  ["هم ذهبوا", "hum dhahabū", "They went."],
+  ["قرأت كتابًا", "qaraʾtu kitāban", "I read a book."],
+  ["كتبت", "katabtu", "I wrote"],
+  ["شربت", "sharibtu", "I drank"],
+  ["اشتريت", "ishtaraytu", "I bought"],
+  ["سمعت", "samiʿtu", "I heard"],
+  ["فهمت", "fahimtu", "I understood"],
+  ["نمت", "nimtu", "I slept"],
+  ["تعلمت", "taʿallamtu", "I learned"],
+  ["عملت", "ʿamiltu", "I worked"],
+  ["ذهبنا", "dhahabnā", "we went"],
+  ["أكلنا", "akalnā", "we ate"],
+  ["سأذهب غدًا", "sa-adhhabu ghadan", "I will go tomorrow."],
+  ["سوف نأتي", "sawfa naʾtī", "We will come."],
+  ["سأكتب", "sa-aktub", "I will write"],
+  ["سأشتري", "sa-ashtarī", "I will buy"],
+  ["سأتعلم", "sa-ataʿallam", "I will learn"],
+  ["سنذهب", "sa-nadhhab", "we will go"],
+  ["سأعود", "sa-aʿūd", "I will return"],
+  ["سأتصل بك", "sa-attaṣilu bika", "I'll call you."],
+  ["الأسبوع القادم", "al-usbūʿ al-qādim", "next week"],
+  ["الأسبوع الماضي", "al-usbūʿ al-māḍī", "last week"],
+  ["كنت هناك من قبل", "kuntu hunāka min qabl", "I was there before."],
+  ["أين كنت؟", "ayna kunta?", "Where were you?"],
+  ["ماذا فعلت؟", "mādhā faʿalta?", "What did you do?"],
+  ["متى وصلت؟", "matā waṣalta?", "When did you arrive?"],
+  ["عندي عمل غدًا", "ʿindī ʿamal ghadan", "I have work tomorrow."],
+  ["وصلت للتو", "waṣaltu li-t-tawwi", "I just arrived."],
+  ["قريبًا", "qarīban", "soon"],
+  ["بعد قليل", "baʿda qalīl", "in a little while"],
+  ["دائمًا", "dāʾiman", "always"],
+  ["أحيانًا", "aḥyānan", "sometimes"],
+  ["أبدًا", "abadan", "never / ever"],
+  ["مرة أخرى", "marra ukhrā", "again"]
+]),
+mk(2, "Real Conversations", "🗣️", "Practice these as short dialogues. Say them aloud and match the rhythm.", [
+  ["من أين أنت؟", "min ayna anta?", "Where are you from?"],
+  ["كم عمرك؟", "kam ʿumruk?", "How old are you?"],
+  ["عمري عشرون سنة", "ʿumrī ʿishrūna sana", "I'm twenty years old."],
+  ["أين تسكن؟", "ayna taskun?", "Where do you live?"],
+  ["أسكن في المدينة", "askunu fī l-madīna", "I live in the city."],
+  ["ماذا تعمل؟", "mādhā taʿmal?", "What do you do for work?"],
+  ["أنا طبيب", "anā ṭabīb", "I'm a doctor."],
+  ["ما رقم هاتفك؟", "mā raqmu hātifik?", "What is your phone number?"],
+  ["عفوًا، أين محطة المترو؟", "ʿafwan, ayna maḥaṭṭat al-mitrū?", "Excuse me, where is the metro station?"],
+  ["اذهب مباشرة ثم انعطف يمينًا", "idhhab mubāshara thumma inʿaṭif yamīnan", "Go straight, then turn right."],
+  ["هل هو بعيد من هنا؟", "hal huwa baʿīd min hunā?", "Is it far from here?"],
+  ["لا، خمس دقائق سيرًا", "lā, khams daqāʾiq sayran", "No, five minutes on foot."],
+  ["أين أقرب صيدلية؟", "ayna aqrab ṣaydaliyya?", "Where is the nearest pharmacy?"],
+  ["طاولة لشخصين", "ṭāwila li-shakhṣayn", "A table for two."],
+  ["القائمة من فضلك", "al-qāʾima min faḍlak", "The menu, please."],
+  ["أنا نباتي", "anā nabātī", "I am vegetarian."],
+  ["كان لذيذًا جدًا", "kāna ladhīdhan jiddan", "It was very delicious."],
+  ["هل يمكنك التحدث ببطء؟", "hal yumkinuka t-taḥaddutha bi-buṭʾ?", "Can you speak slowly?"],
+  ["كرر من فضلك", "karrir min faḍlak", "Please repeat."],
+  ["ما معنى هذا؟", "mā maʿnā hādhā?", "What does this mean?"],
+  ["ما اسم هذا بالعربية؟", "mā ismu hādhā bi-l-ʿarabiyya?", "What is this called in Arabic?"],
+  ["أنا لا أعرف", "anā lā aʿrif", "I don't know."],
+  ["أفهم قليلاً", "afhamu qalīlan", "I understand a little."],
+  ["لحظة من فضلك", "laḥẓa min faḍlak", "One moment, please."],
+  ["لا مشكلة", "lā mushkila", "No problem."],
+  ["هل يمكنني الجلوس هنا؟", "hal yumkinunī l-julūs hunā?", "May I sit here?"],
+  ["هل أستطيع مساعدتك؟", "hal astaṭīʿu musāʿadataka?", "Can I help you?"],
+  ["أحتاج إلى طبيب", "aḥtāju ilā ṭabīb", "I need a doctor."],
+  ["النجدة!", "an-najda!", "Help!"],
+  ["اتصل بالشرطة", "ittaṣil bi-sh-shurṭa", "Call the police."]
+]),
+mk(2, "Home, Body & Health", "🏠", "في (fī) means 'in / at': في البيت 'at home', في المكتب 'in the office'.", [
+  ["غرفة", "ghurfa", "room"],
+  ["مطبخ", "maṭbakh", "kitchen"],
+  ["حمام", "ḥammām", "bathroom"],
+  ["باب", "bāb", "door"],
+  ["نافذة", "nāfidha", "window"],
+  ["سرير", "sarīr", "bed"],
+  ["طاولة", "ṭāwila", "table"],
+  ["كرسي", "kursī", "chair"],
+  ["مفتاح", "miftāḥ", "key"],
+  ["مصباح", "miṣbāḥ", "lamp"],
+  ["تلفزيون", "tilfizyūn", "television"],
+  ["هاتف", "hātif", "phone"],
+  ["حاسوب", "ḥāsūb", "computer"],
+  ["مكتب", "maktab", "office / desk"],
+  ["عمل", "ʿamal", "work / job"],
+  ["نوم", "nawm", "sleep"],
+  ["في", "fī", "in / at"],
+  ["رأس", "raʾs", "head"],
+  ["وجه", "wajh", "face"],
+  ["عين", "ʿayn", "eye"],
+  ["أذن", "udhun", "ear"],
+  ["أنف", "anf", "nose"],
+  ["فم", "fam", "mouth"],
+  ["أسنان", "asnān", "teeth"],
+  ["شعر", "shaʿr", "hair"],
+  ["يد", "yad", "hand"],
+  ["قدم", "qadam", "foot"],
+  ["رجل", "rijl", "leg"],
+  ["ظهر", "ẓahr", "back"],
+  ["بطن", "baṭn", "stomach"],
+  ["قلب", "qalb", "heart"],
+  ["صحة", "ṣiḥḥa", "health"],
+  ["ألم", "alam", "pain"],
+  ["صداع", "ṣudāʿ", "headache"],
+  ["حمى", "ḥummā", "fever"],
+  ["دواء", "dawāʾ", "medicine"],
+  ["أنا مريض", "anā marīḍ", "I am sick."],
+  ["أستيقظ مبكرًا كل يوم", "astayqiẓu mubakkiran kulla yawm", "I wake up early every day."],
+  ["أتناول الفطور", "atanāwalu l-fuṭūr", "I eat breakfast."],
+  ["أذهب إلى العمل", "adhhabu ilā l-ʿamal", "I go to work."],
+  ["عملي في المكتب", "ʿamalī fī l-maktab", "My work is at the office."],
+  ["أرتاح في البيت", "artāḥu fī l-bayt", "I rest at home."],
+  ["أقرأ كتابًا في الليل", "aqraʾu kitāban fī l-layl", "I read a book at night."]
+]),
+mk(2, "Culture, Nature & Expressions", "🎉", "These phrases carry warmth and faith in everyday speech. You will hear them constantly.", [
+  ["إن شاء الله", "in shāʾ Allāh", "God willing"],
+  ["ما شاء الله", "mā shāʾ Allāh", "wow / God has willed it"],
+  ["الحمد لله", "al-ḥamdu lillāh", "thank God"],
+  ["بالتوفيق", "bi-t-tawfīq", "good luck"],
+  ["مبروك", "mabrūk", "congratulations"],
+  ["سلامتك", "salāmatak", "get well soon"],
+  ["بارك الله فيك", "bāraka llāhu fīk", "God bless you"],
+  ["جزاك الله خيرًا", "jazāka llāhu khayran", "may God reward you"],
+  ["كل عام وأنتم بخير", "kull ʿām wa-antum bi-khayr", "happy new year / many happy returns"],
+  ["عيد مبارك", "ʿīd mubārak", "blessed holiday"],
+  ["رمضان كريم", "ramaḍān karīm", "Ramadan Kareem"],
+  ["عيد ميلاد سعيد", "ʿīd mīlād saʿīd", "Happy birthday"],
+  ["بالهنا والشفا", "bi-l-hanā wa-sh-shifā", "Enjoy your meal"],
+  ["تفضل", "tafaḍḍal", "please, go ahead / here you are"],
+  ["يعطيك العافية", "yaʿṭīka l-ʿāfiya", "well done / thanks for your effort"],
+  ["لا شكر على واجب", "lā shukra ʿalā wājib", "no thanks needed"],
+  ["يا سلام", "yā salām", "wow / amazing"],
+  ["على فكرة", "ʿalā fikra", "by the way"],
+  ["بصراحة", "bi-ṣarāḥa", "honestly"],
+  ["أنا أتعلم العربية", "anā ataʿallamu l-ʿarabiyya", "I am learning Arabic."],
+  ["العربية جميلة", "al-ʿarabiyya jamīla", "Arabic is beautiful."],
+  ["قطة", "qiṭṭa", "cat"],
+  ["كلب", "kalb", "dog"],
+  ["حصان", "ḥiṣān", "horse"],
+  ["جمل", "jamal", "camel"],
+  ["أسد", "asad", "lion"],
+  ["حمار", "ḥimār", "donkey"],
+  ["بقرة", "baqara", "cow"],
+  ["طائر", "ṭāʾir", "bird"],
+  ["شجرة", "shajara", "tree"],
+  ["زهرة", "zahra", "flower"],
+  ["سماء", "samāʾ", "sky"],
+  ["نجمة", "najma", "star"],
+  ["أرض", "arḍ", "earth / ground"],
+  ["نار", "nār", "fire"],
+  ["حيوان", "ḥayawān", "animal"]
+])
+];
+
+/* ---------- Fun & useful phrases: [Arabic, transliteration, English] ---------- */
+const PHRASES = [
+  { cat: "Reactions", icon: "😮", items: [
+    ["ما شاء الله", "mā shāʾ Allāh", "Wow! How wonderful!"],
+    ["يا سلام", "yā salām", "Amazing!"],
+    ["سبحان الله", "subḥān Allāh", "Wow / glory to God (amazement)"],
+    ["والله", "wallāhi", "Really! / I swear"],
+    ["حقًا؟", "ḥaqqan?", "Really?"],
+    ["مستحيل", "mustaḥīl", "Impossible!"],
+    ["ممتاز", "mumtāz", "Excellent!"],
+    ["رائع", "rāʾiʿ", "Great! / Wonderful"],
+    ["تمام", "tamām", "Perfect / okay"],
+    ["طيب", "ṭayyib", "Okay / alright"],
+    ["يلا", "yallā", "Come on! / Let's go!"],
+    ["لا تقلق", "lā taqlaq", "Don't worry"]
+  ]},
+  { cat: "Compliments", icon: "🌟", items: [
+    ["أنت لطيف جدًا", "anta laṭīf jiddan", "You are very kind (to a man)"],
+    ["أنتِ رائعة", "anti rāʾiʿa", "You are wonderful (to a woman)"],
+    ["ما أجمل هذا!", "mā ajmala hādhā!", "How beautiful this is!"],
+    ["طعامك لذيذ جدًا", "ṭaʿāmuka ladhīdh jiddan", "Your food is very delicious"],
+    ["عملك ممتاز", "ʿamaluka mumtāz", "Your work is excellent"],
+    ["عندك ذوق جميل", "ʿindaka dhawq jamīl", "You have great taste"],
+    ["أعجبني ذلك", "aʿjabanī dhālik", "I liked that"],
+    ["هذا ممتع", "hādhā mumtiʿ", "This is fun"]
+  ]},
+  { cat: "Making friends", icon: "🤝", items: [
+    ["هل نكون أصدقاء؟", "hal nakūnu aṣdiqāʾ?", "Shall we be friends?"],
+    ["سعدت بمعرفتك", "saʿidtu bi-maʿrifatik", "Pleased to meet you"],
+    ["أراك لاحقًا", "arāka lāḥiqan", "See you later"],
+    ["أراك غدًا", "arāka ghadan", "See you tomorrow"],
+    ["أشتاق إليك", "ashtāqu ilayk", "I miss you"],
+    ["هل تريد أن نتمشى؟", "hal turīdu an natamashshā?", "Do you want to go for a walk?"],
+    ["أنا سعيد جدًا اليوم", "anā saʿīd jiddan al-yawm", "I'm very happy today"],
+    ["هيا بنا", "hayyā binā", "Let's go!"]
+  ]},
+  { cat: "Travel & emergencies", icon: "✈️", items: [
+    ["أين دورة المياه؟", "ayna dawrat al-miyāh?", "Where is the restroom?"],
+    ["هل يوجد واي فاي؟", "hal yūjadu wāy fāy?", "Is there Wi-Fi?"],
+    ["ما كلمة السر؟", "mā kalimat as-sirr?", "What's the password?"],
+    ["هل تقبلون البطاقة؟", "hal taqbalūna l-biṭāqa?", "Do you accept cards?"],
+    ["أريد غرفة لشخصين", "urīdu ghurfa li-shakhṣayn", "I want a room for two"],
+    ["كم الأجرة؟", "kam al-ujra?", "How much is the fare?"],
+    ["خذني إلى هذا العنوان", "khudhnī ilā hādhā l-ʿunwān", "Take me to this address"],
+    ["أنا مريض", "anā marīḍ", "I'm sick"],
+    ["أحتاج إلى مساعدة", "aḥtāju ilā musāʿada", "I need help"]
+  ]},
+  { cat: "Playful & everyday", icon: "🎈", items: [
+    ["مرحبًا بالعالم", "marḥaban bi-l-ʿālam", "Hello, world!"],
+    ["أنا أحب القهوة", "anā uḥibbu l-qahwa", "I love coffee"],
+    ["أنا أتكلم قليلاً", "anā atakallamu qalīlan", "I speak a little"],
+    ["حظًا سعيدًا", "ḥaẓẓan saʿīdan", "Good luck"],
+    ["أنا جاهز", "anā jāhiz", "I'm ready"],
+    ["بالتأكيد", "bi-t-taʾkīd", "Definitely"],
+    ["أنا جائع جدًا", "anā jāʾiʿ jiddan", "I'm very hungry"],
+    ["كاكا رائع!", "Kākā rāʾiʿ!", "Kaka is awesome!"]
+  ]}
+];
+
+/* ---------- 100 everyday Q&A: [Q, Q translit, Q English, A, A translit, A English] ---------- */
+const QA_THEMES = [
+  { name: "Getting to know you", icon: "🤝", items: [
+    ["ما اسمك؟", "mā ismuk?", "What's your name?", "اسمي أحمد.", "ismī Aḥmad.", "My name is Ahmad."],
+    ["من أين أنت؟", "min ayna anta?", "Where are you from?", "أنا من أمريكا.", "anā min amrīkā.", "I'm from America."],
+    ["كم عمرك؟", "kam ʿumruk?", "How old are you?", "عمري ثلاثون سنة.", "ʿumrī thalāthūna sana.", "I'm thirty years old."],
+    ["أين تسكن؟", "ayna taskun?", "Where do you live?", "أسكن في المدينة.", "askunu fī l-madīna.", "I live in the city."],
+    ["ماذا تعمل؟", "mādhā taʿmal?", "What do you do for work?", "أنا مهندس.", "anā muhandis.", "I'm an engineer."],
+    ["هل أنت متزوج؟", "hal anta mutazawwij?", "Are you married?", "لا، أنا أعزب.", "lā, anā aʿzab.", "No, I'm single."],
+    ["هل عندك إخوة؟", "hal ʿindaka ikhwa?", "Do you have siblings?", "نعم، عندي أخ وأخت.", "naʿam, ʿindī akh wa-ukht.", "Yes, I have a brother and a sister."],
+    ["هل تتكلم العربية؟", "hal tatakallamu l-ʿarabiyya?", "Do you speak Arabic?", "أتكلم قليلاً.", "atakallamu qalīlan.", "I speak a little."],
+    ["ماذا تحب أن تفعل؟", "mādhā tuḥibbu an tafʿal?", "What do you like to do?", "أحب القراءة.", "uḥibbu l-qirāʾa.", "I like reading."],
+    ["ما هوايتك؟", "mā hiwāyatuk?", "What's your hobby?", "هوايتي الرياضة.", "hiwāyatī ar-riyāḍa.", "My hobby is sports."]
+  ]},
+  { name: "Feelings & check-ins", icon: "😊", items: [
+    ["كيف حالك؟", "kayfa ḥāluk?", "How are you?", "أنا بخير، الحمد لله.", "anā bi-khayr, al-ḥamdu lillāh.", "I'm fine, thank God."],
+    ["كيف كان يومك؟", "kayfa kāna yawmuk?", "How was your day?", "كان يومًا جميلاً.", "kāna yawman jamīlan.", "It was a nice day."],
+    ["هل أنت سعيد؟", "hal anta saʿīd?", "Are you happy?", "نعم، سعيد جدًا.", "naʿam, saʿīd jiddan.", "Yes, very happy."],
+    ["هل أنت متعب؟", "hal anta mutʿab?", "Are you tired?", "نعم، قليلاً.", "naʿam, qalīlan.", "Yes, a little."],
+    ["ماذا بك؟", "mādhā bik?", "What's wrong?", "لا شيء، أنا بخير.", "lā shayʾ, anā bi-khayr.", "Nothing, I'm fine."],
+    ["هل أنت غاضب؟", "hal anta ghāḍib?", "Are you angry?", "لا، أبدًا.", "lā, abadan.", "No, not at all."],
+    ["هل أنت خائف؟", "hal anta khāʾif?", "Are you scared?", "قليلاً.", "qalīlan.", "A little."],
+    ["هل تريد مساعدة؟", "hal turīdu musāʿada?", "Do you want help?", "نعم، شكرًا.", "naʿam, shukran.", "Yes, thanks."],
+    ["هل أنت مشغول؟", "hal anta mashghūl?", "Are you busy?", "لا، أنا متفرغ.", "lā, anā mutafarrigh.", "No, I'm free."],
+    ["هل تحتاج شيئًا؟", "hal taḥtāju shayʾan?", "Do you need anything?", "لا، شكرًا.", "lā, shukran.", "No, thank you."]
+  ]},
+  { name: "Food & drink", icon: "🍽️", items: [
+    ["هل أنت جائع؟", "hal anta jāʾiʿ?", "Are you hungry?", "نعم، أنا جائع جدًا.", "naʿam, anā jāʾiʿ jiddan.", "Yes, I'm very hungry."],
+    ["ماذا تريد أن تشرب؟", "mādhā turīdu an tashrab?", "What do you want to drink?", "أريد عصيرًا.", "urīdu ʿaṣīran.", "I want juice."],
+    ["ماذا تريد أن تأكل؟", "mādhā turīdu an taʾkul?", "What do you want to eat?", "أريد دجاجًا وأرزًا.", "urīdu dajājan wa-aruzzan.", "I want chicken and rice."],
+    ["هل تحب القهوة؟", "hal tuḥibbu l-qahwa?", "Do you like coffee?", "نعم، أحبها كثيرًا.", "naʿam, uḥibbuhā kathīran.", "Yes, I love it a lot."],
+    ["هل تشرب الشاي؟", "hal tashrabu sh-shāy?", "Do you drink tea?", "نعم، مع السكر.", "naʿam, maʿa s-sukkar.", "Yes, with sugar."],
+    ["ما طعامك المفضل؟", "mā ṭaʿāmuka l-mufaḍḍal?", "What's your favorite food?", "أحب البيتزا.", "uḥibbu l-bītzā.", "I love pizza."],
+    ["هل أنت نباتي؟", "hal anta nabātī?", "Are you vegetarian?", "لا، آكل اللحم.", "lā, ākulu l-laḥm.", "No, I eat meat."],
+    ["هل الطعام لذيذ؟", "hal aṭ-ṭaʿām ladhīdh?", "Is the food delicious?", "نعم، لذيذ جدًا.", "naʿam, ladhīdh jiddan.", "Yes, very delicious."],
+    ["هل تريد المزيد؟", "hal turīdu l-mazīd?", "Do you want more?", "لا، شكرًا، شبعت.", "lā, shukran, shabiʿtu.", "No thanks, I'm full."],
+    ["أين نأكل اليوم؟", "ayna naʾkul al-yawm?", "Where shall we eat today?", "في المطعم القريب.", "fī l-maṭʿam al-qarīb.", "At the nearby restaurant."]
+  ]},
+  { name: "Travel & directions", icon: "🧭", items: [
+    ["أين الفندق؟", "ayna l-funduq?", "Where is the hotel?", "الفندق في آخر الشارع.", "al-funduq fī ākhir ash-shāriʿ.", "The hotel is at the end of the street."],
+    ["كيف أصل إلى المطار؟", "kayfa aṣilu ilā l-maṭār?", "How do I get to the airport?", "خذ سيارة أجرة.", "khudh sayyārat ujra.", "Take a taxi."],
+    ["هل المحطة بعيدة؟", "hal al-maḥaṭṭa baʿīda?", "Is the station far?", "لا، هي قريبة.", "lā, hiya qarība.", "No, it's near."],
+    ["كم يستغرق الوصول؟", "kam yastaghriqu l-wuṣūl?", "How long does it take to get there?", "عشر دقائق فقط.", "ʿashr daqāʾiq faqaṭ.", "Only ten minutes."],
+    ["أين أشتري تذكرة؟", "ayna ashtarī tadhkira?", "Where do I buy a ticket?", "من الشباك هناك.", "min ash-shubbāk hunāk.", "From the window over there."],
+    ["متى يغادر القطار؟", "matā yughādiru l-qiṭār?", "When does the train leave?", "في الساعة الثالثة.", "fī s-sāʿa ath-thālitha.", "At three o'clock."],
+    ["هل هذا الطريق صحيح؟", "hal hādhā aṭ-ṭarīq ṣaḥīḥ?", "Is this the right way?", "نعم، اذهب مباشرة.", "naʿam, idhhab mubāshara.", "Yes, go straight."],
+    ["هل معك جواز السفر؟", "hal maʿaka jawāz as-safar?", "Do you have your passport?", "نعم، هو في حقيبتي.", "naʿam, huwa fī ḥaqībatī.", "Yes, it's in my bag."],
+    ["هل هذه أول زيارة لك؟", "hal hādhihi awwalu ziyāra laka?", "Is this your first visit?", "نعم، أول مرة.", "naʿam, awwal marra.", "Yes, the first time."],
+    ["هل أعجبتك المدينة؟", "hal aʿjabatka l-madīna?", "Did you like the city?", "نعم، إنها جميلة جدًا.", "naʿam, innahā jamīla jiddan.", "Yes, it's very beautiful."]
+  ]},
+  { name: "Shopping & money", icon: "🛍️", items: [
+    ["كم هذا؟", "kam hādhā?", "How much is this?", "خمسة دولارات.", "khamsat dūlārāt.", "Five dollars."],
+    ["هل عندك مقاس أكبر؟", "hal ʿindaka maqās akbar?", "Do you have a bigger size?", "نعم، لحظة من فضلك.", "naʿam, laḥẓa min faḍlak.", "Yes, one moment please."],
+    ["هل أستطيع الدفع بالبطاقة؟", "hal astaṭīʿu d-dafʿa bi-l-biṭāqa?", "Can I pay by card?", "نعم، تفضل.", "naʿam, tafaḍḍal.", "Yes, go ahead."],
+    ["هل هناك خصم؟", "hal hunāka khaṣm?", "Is there a discount?", "نعم، عشرة بالمئة.", "naʿam, ʿashara bi-l-miʾa.", "Yes, ten percent."],
+    ["ماذا تريد أن تشتري؟", "mādhā turīdu an tashtarī?", "What do you want to buy?", "أريد هدية.", "urīdu hadiyya.", "I want a gift."],
+    ["هل هذا مناسب؟", "hal hādhā munāsib?", "Is this suitable?", "نعم، هذا مناسب.", "naʿam, hādhā munāsib.", "Yes, this is suitable."],
+    ["هل السعر ثابت؟", "hal as-siʿr thābit?", "Is the price fixed?", "لا، يمكن التفاوض.", "lā, yumkinu t-tafāwuḍ.", "No, you can negotiate."],
+    ["أين المحل؟", "ayna l-maḥall?", "Where is the shop?", "بجانب البنك.", "bi-jānib al-bank.", "Next to the bank."],
+    ["هل هذا رخيص؟", "hal hādhā rakhīṣ?", "Is this cheap?", "لا، هذا غالٍ.", "lā, hādhā ghālin.", "No, this is expensive."],
+    ["هل تريد كيسًا؟", "hal turīdu kīsan?", "Do you want a bag?", "نعم، من فضلك.", "naʿam, min faḍlak.", "Yes, please."]
+  ]},
+  { name: "Health", icon: "🩺", items: [
+    ["هل أنت مريض؟", "hal anta marīḍ?", "Are you sick?", "نعم، عندي صداع.", "naʿam, ʿindī ṣudāʿ.", "Yes, I have a headache."],
+    ["أين يؤلمك؟", "ayna yuʾlimuk?", "Where does it hurt?", "يؤلمني بطني.", "yuʾlimunī baṭnī.", "My stomach hurts."],
+    ["هل عندك حمى؟", "hal ʿindaka ḥummā?", "Do you have a fever?", "لا، لا أظن.", "lā, lā aẓunn.", "No, I don't think so."],
+    ["هل تحتاج إلى طبيب؟", "hal taḥtāju ilā ṭabīb?", "Do you need a doctor?", "نعم، من فضلك.", "naʿam, min faḍlak.", "Yes, please."],
+    ["هل أخذت الدواء؟", "hal akhadhta d-dawāʾ?", "Did you take the medicine?", "نعم، أخذته.", "naʿam, akhadhtuhu.", "Yes, I took it."],
+    ["كيف تشعر الآن؟", "kayfa tashʿuru l-ān?", "How do you feel now?", "أشعر بتحسن.", "ashʿuru bi-taḥassun.", "I feel better."],
+    ["هل نمت جيدًا؟", "hal nimta jayyidan?", "Did you sleep well?", "نعم، نمت جيدًا.", "naʿam, nimtu jayyidan.", "Yes, I slept well."],
+    ["هل تشرب ماءً كثيرًا؟", "hal tashrabu māʾan kathīran?", "Do you drink a lot of water?", "نعم، كل يوم.", "naʿam, kulla yawm.", "Yes, every day."],
+    ["أين أقرب صيدلية؟", "ayna aqrab ṣaydaliyya?", "Where is the nearest pharmacy?", "بجانب المستشفى.", "bi-jānib al-mustashfā.", "Next to the hospital."],
+    ["هل تحتاج إلى راحة؟", "hal taḥtāju ilā rāḥa?", "Do you need rest?", "نعم، سأنام قليلاً.", "naʿam, sa-anāmu qalīlan.", "Yes, I'll sleep a little."]
+  ]},
+  { name: "Time & plans", icon: "⏰", items: [
+    ["كم الساعة؟", "kam as-sāʿa?", "What time is it?", "الساعة الثانية.", "as-sāʿa ath-thāniya.", "It's two o'clock."],
+    ["ما تاريخ اليوم؟", "mā tārīkh al-yawm?", "What's today's date?", "اليوم العاشر.", "al-yawm al-ʿāshir.", "Today is the tenth."],
+    ["أي يوم هو اليوم؟", "ayyu yawm huwa al-yawm?", "What day is it today?", "اليوم الجمعة.", "al-yawm al-jumʿa.", "Today is Friday."],
+    ["ماذا ستفعل غدًا؟", "mādhā sa-tafʿalu ghadan?", "What will you do tomorrow?", "سأزور أصدقائي.", "sa-azūru aṣdiqāʾī.", "I'll visit my friends."],
+    ["متى تستيقظ؟", "matā tastayqiẓ?", "When do you wake up?", "في الساعة السابعة.", "fī s-sāʿa as-sābiʿa.", "At seven o'clock."],
+    ["هل أنت حر اليوم؟", "hal anta ḥurr al-yawm?", "Are you free today?", "نعم، بعد الظهر.", "naʿam, baʿda ẓ-ẓuhr.", "Yes, in the afternoon."],
+    ["متى نلتقي؟", "matā naltaqī?", "When shall we meet?", "غدًا في المساء.", "ghadan fī l-masāʾ.", "Tomorrow evening."],
+    ["هل أنت متأخر؟", "hal anta mutaʾakhkhir?", "Are you late?", "لا، أنا في الوقت.", "lā, anā fī l-waqt.", "No, I'm on time."],
+    ["هل لديك خطط للعطلة؟", "hal ladayka khuṭaṭ lil-ʿuṭla?", "Do you have plans for the holiday?", "نعم، سأسافر.", "naʿam, sa-usāfir.", "Yes, I'll travel."],
+    ["كم من الوقت تحتاج؟", "kam mina l-waqt taḥtāj?", "How much time do you need?", "ساعة واحدة.", "sāʿa wāḥida.", "One hour."]
+  ]},
+  { name: "Home & family", icon: "🏠", items: [
+    ["كم فرد في عائلتك؟", "kam fard fī ʿāʾilatik?", "How many people are in your family?", "خمسة أفراد.", "khamsat afrād.", "Five people."],
+    ["هل والداك في البيت؟", "hal wālidāka fī l-bayt?", "Are your parents at home?", "نعم، هما في البيت.", "naʿam, humā fī l-bayt.", "Yes, they're at home."],
+    ["أين تسكن عائلتك؟", "ayna taskunu ʿāʾilatuk?", "Where does your family live?", "في مدينة كبيرة.", "fī madīna kabīra.", "In a big city."],
+    ["هل عندك أطفال؟", "hal ʿindaka aṭfāl?", "Do you have children?", "نعم، عندي ولد وبنت.", "naʿam, ʿindī walad wa-bint.", "Yes, I have a boy and a girl."],
+    ["ما اسم أخيك؟", "mā ism akhīk?", "What's your brother's name?", "اسمه عمر.", "ismuhu ʿUmar.", "His name is Omar."],
+    ["هل بيتك كبير؟", "hal baytuka kabīr?", "Is your house big?", "لا، هو صغير.", "lā, huwa ṣaghīr.", "No, it's small."],
+    ["كم غرفة في بيتك؟", "kam ghurfa fī baytik?", "How many rooms are in your house?", "أربع غرف.", "arbaʿ ghuraf.", "Four rooms."],
+    ["هل عندك حديقة؟", "hal ʿindaka ḥadīqa?", "Do you have a garden?", "نعم، حديقة صغيرة.", "naʿam, ḥadīqa ṣaghīra.", "Yes, a small garden."],
+    ["هل عندك حيوان أليف؟", "hal ʿindaka ḥayawān alīf?", "Do you have a pet?", "نعم، عندي قطة.", "naʿam, ʿindī qiṭṭa.", "Yes, I have a cat."],
+    ["من يطبخ في البيت؟", "man yaṭbukhu fī l-bayt?", "Who cooks at home?", "أمي تطبخ.", "ummī taṭbukh.", "My mother cooks."]
+  ]},
+  { name: "Work & study", icon: "💼", items: [
+    ["أين تعمل؟", "ayna taʿmal?", "Where do you work?", "أعمل في شركة.", "aʿmalu fī sharika.", "I work at a company."],
+    ["متى تبدأ العمل؟", "matā tabdaʾu l-ʿamal?", "When do you start work?", "في الساعة التاسعة.", "fī s-sāʿa at-tāsiʿa.", "At nine o'clock."],
+    ["هل تحب عملك؟", "hal tuḥibbu ʿamalak?", "Do you like your job?", "نعم، أحبه كثيرًا.", "naʿam, uḥibbuhu kathīran.", "Yes, I like it a lot."],
+    ["ماذا تدرس؟", "mādhā tadrus?", "What do you study?", "أدرس الطب.", "adrusu aṭ-ṭibb.", "I study medicine."],
+    ["أين تدرس؟", "ayna tadrus?", "Where do you study?", "في الجامعة.", "fī l-jāmiʿa.", "At the university."],
+    ["هل الدرس صعب؟", "hal ad-dars ṣaʿb?", "Is the lesson difficult?", "قليلاً، لكنه ممتع.", "qalīlan, lākinnahu mumtiʿ.", "A little, but it's fun."],
+    ["هل عندك امتحان؟", "hal ʿindaka imtiḥān?", "Do you have an exam?", "نعم، غدًا.", "naʿam, ghadan.", "Yes, tomorrow."],
+    ["هل عندك اجتماع؟", "hal ʿindaka ijtimāʿ?", "Do you have a meeting?", "نعم، بعد ساعة.", "naʿam, baʿda sāʿa.", "Yes, in an hour."],
+    ["من معلمك؟", "man muʿallimuk?", "Who is your teacher?", "معلمتي سارة.", "muʿallimatī Sāra.", "My teacher is Sara."],
+    ["كم لغة تتكلم؟", "kam lugha tatakallam?", "How many languages do you speak?", "لغتين.", "lughatayn.", "Two languages."]
+  ]},
+  { name: "Language help & fun", icon: "🎈", items: [
+    ["هل تفهم؟", "hal tafham?", "Do you understand?", "نعم، أفهم.", "naʿam, afham.", "Yes, I understand."],
+    ["هل يمكنك أن تعيد؟", "hal yumkinuka an tuʿīd?", "Can you repeat that?", "بالتأكيد.", "bi-t-taʾkīd.", "Of course."],
+    ["ما معنى هذه الكلمة؟", "mā maʿnā hādhihi l-kalima?", "What does this word mean?", "معناها \"شكرًا\".", "maʿnāhā \"shukran\".", "It means \"thank you\"."],
+    ["كيف تكتب اسمك؟", "kayfa taktubu ismak?", "How do you write your name?", "أكتبه هنا.", "aktubuhu hunā.", "I'll write it here."],
+    ["هل تتكلم ببطء؟", "hal tatakallamu bi-buṭʾ?", "Do you speak slowly?", "نعم، سأتكلم ببطء.", "naʿam, sa-atakallamu bi-buṭʾ.", "Yes, I'll speak slowly."],
+    ["هل تحب تعلم العربية؟", "hal tuḥibbu taʿallum al-ʿarabiyya?", "Do you like learning Arabic?", "نعم، أحبها كثيرًا.", "naʿam, uḥibbuhā kathīran.", "Yes, I love it a lot."],
+    ["ما أصعب شيء في العربية؟", "mā aṣʿab shayʾ fī l-ʿarabiyya?", "What's the hardest thing in Arabic?", "النطق أحيانًا.", "an-nuṭq aḥyānan.", "Pronunciation, sometimes."],
+    ["ما كلمتك المفضلة؟", "mā kalimatuka l-mufaḍḍala?", "What's your favorite word?", "كلمتي المفضلة \"جميل\".", "kalimatī l-mufaḍḍala \"jamīl\".", "My favorite word is \"beautiful\"."],
+    ["هل تريد أن نتدرب معًا؟", "hal turīdu an natadarraba maʿan?", "Do you want to practice together?", "بالتأكيد، هيا!", "bi-t-taʾkīd, hayyā!", "Sure, let's go!"],
+    ["هل تحب كاكا؟", "hal tuḥibbu Kākā?", "Do you like Kaka?", "نعم، كاكا رائع!", "naʿam, Kākā rāʾiʿ!", "Yes, Kaka is awesome!"]
+  ]}
+];
+</script>
+
+<!-- ======================= APP ======================= -->
+<script>
+"use strict";
+(function () {
+
+const SPEECH = "ar-SA";
+const LEVELS = [
+  { name: "Beginner",     blurb: "Pronouns, greetings, numbers, family and first sentences." },
+  { name: "Intermediate", blurb: "Food, travel, verbs, time and everyday questions." },
+  { name: "Final",        blurb: "Describing, past and future, conversations and culture." }
+];
+const BUBBLES = ["Marhaba! Ready for today's words?", "Every word you learn is a win!", "Yalla, let's learn something new!", "Tap a card to hear Kaka say it!", "Small steps, big smiles!", "You're doing great. Keep going!"];
+const WIN = ["Yalla! You did it!", "Brilliant!", "Kaka is so proud!", "Mashallah, well done!"];
+const TRY = ["So close! Kaka believes in you.", "Almost there. One more go?", "Every mistake is practice!"];
+
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const dstr = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const dayNum = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 864e5);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const scriptSize = t => t.length <= 8 ? "" : t.length <= 16 ? "l" : "m";
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const ICON = {
+  chev: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  learn: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M8 7.5h8"/></svg>',
+  phrases: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+  words: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  me: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>'
+};
+function kaka(size, hop) {
+  return `<svg class="kaka ${hop ? "hop" : ""}" width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M42 20Q40 9 33 6M50 17Q50 6 55 2M58 20Q62 11 70 10" stroke="#2B2A4C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="50" cy="57" r="39" fill="#FFC93C" stroke="#2B2A4C" stroke-width="3.5"/>
+    <ellipse cx="36" cy="52" rx="5.5" ry="7.5" fill="#2B2A4C"/><ellipse cx="64" cy="52" rx="5.5" ry="7.5" fill="#2B2A4C"/>
+    <circle cx="38" cy="49" r="2" fill="#fff"/><circle cx="66" cy="49" r="2" fill="#fff"/>
+    <circle cx="25" cy="66" r="6.5" fill="#FF7A6B" opacity=".75"/><circle cx="75" cy="66" r="6.5" fill="#FF7A6B" opacity=".75"/>
+    <path d="M36 65Q50 86 64 65Z" fill="#8A2B3D" stroke="#2B2A4C" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M43 76Q50 70 57 76" fill="#FF7A6B"/>
+  </svg>`;
+}
+
+/* ---------- storage ---------- */
+const KEY = "learn-arabic-kaka-v1";
+let db = { lastUser: null, users: {} };
+const S = { user: null, tab: "learn", view: "home", li: 0, step: "learn", idx: 0, quiz: null, sp: null, voices: [], q: "", sub: "fun", pq: "", qaOpen: {}, volatile: false, listening: false, resetArmed: false };
+
+function loadDB() { try { const raw = localStorage.getItem(KEY); if (raw) { const d = JSON.parse(raw); if (d && d.users) db = d; } } catch (e) { S.volatile = true; } }
+function saveDB() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { S.volatile = true; } }
+const U = () => db.users[S.user];
+function prog(i) {
+  const P = U().progress;
+  if (!P[i]) P[i] = { seen: 0, learned: false, best: 0, done: false, stars: 0, spoke: 0 };
+  return P[i];
+}
+const curProg = () => prog(S.li);
+function touchStreak() {
+  const st = U().streak, t = dstr(new Date());
+  if (st.last === t) return;
+  st.count = st.last === dstr(new Date(Date.now() - 864e5)) ? st.count + 1 : 1;
+  st.last = t; saveDB();
+}
+function login(name) {
+  name = name.trim().replace(/\s+/g, " ").slice(0, 24);
+  if (!name) { toast("Type your name to begin"); return; }
+  const key = name.toLowerCase();
+  if (!db.users[key]) db.users[key] = { key, name, created: Date.now(),
+    settings: { slow: false, translit: true, auto: true, unlockAll: false }, hints: { swipe: false },
+    streak: { count: 0, last: "" }, progress: {}, resume: null };
+  db.lastUser = key; S.user = key; S.tab = "learn"; S.view = "home";
+  saveDB(); touchStreak(); render(true);
+}
+function unlocked(i) {
+  if (U().settings.unlockAll || i === 0) return true;
+  const p = prog(i);
+  return prog(i - 1).done || p.done || p.seen > 0;
+}
+
+/* ---------- audio ---------- */
+const synthOK = "speechSynthesis" in window;
+function loadVoices() { if (synthOK) S.voices = speechSynthesis.getVoices(); }
+function voice() {
+  const list = S.voices.filter(v => v.lang.toLowerCase().replace("_", "-").startsWith("ar"));
+  const score = v => (/premium|enhanced|natural|neural/i.test(v.name) ? 3 : 0) + (/google/i.test(v.name) ? 2 : 0) + (v.localService ? 1 : 0);
+  return list.sort((a, b) => score(b) - score(a))[0] || null;
+}
+const hasVoice = () => !!voice();
+function speak(text) {
+  const v = voice();
+  if (!synthOK || !v) return false;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.voice = v; u.lang = v.lang; u.rate = U().settings.slow ? 0.55 : 0.8;
+  u.onstart = () => document.body.classList.add("speaking");
+  u.onend = u.onerror = () => document.body.classList.remove("speaking");
+  speechSynthesis.speak(u);
+  return true;
+}
+const noVoice = () => toast("No Arabic voice on this device. Try “Hear online”.");
+function stopAudio() { if (synthOK) speechSynthesis.cancel(); document.body.classList.remove("speaking"); }
+function onlineLinks(t) {
+  const g = "https://translate.google.com/?sl=ar&tl=en&text=" + encodeURIComponent(t) + "&op=translate";
+  const w = "https://en.wiktionary.org/wiki/" + encodeURIComponent(t);
+  return (hasVoice() ? "" : `<a href="${g}" target="_blank" rel="noopener">Hear online ↗</a>`) +
+         (/\s|[؟?!]/.test(t) ? "" : `<a href="${w}" target="_blank" rel="noopener">Wiktionary ↗</a>`);
+}
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("on");
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 2400);
+}
+
+/* ---------- mic matching ---------- */
+function normS(s) {
+  return s.normalize("NFC")
+    .replace(/[\u0660-\u0669]/g, d => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u064B-\u065F\u0670\u0640\u200c\u200d]/g, "")
+    .replace(/[أإآٱ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه").replace(/ؤ/g, "و").replace(/ئ/g, "ي")
+    .replace(/[\s؟?!.,،:;"'«»…\-]/g, "").toLowerCase();
+}
+function lev(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+function similarity(heard, item) {
+  const targets = [item[0]].concat(item[3] ? item[3].split(" ") : []);
+  const a = normS(heard);
+  return Math.max(...targets.map(t => { const b = normS(t); const len = Math.max(a.length, b.length); return len ? 1 - lev(a, b) / len : 0; }));
+}
+
+/* ---------- shell ---------- */
+function render(scrollTop) {
+  const app = $("#app"), tabs = $("#tabs");
+  if (!S.user) { app.innerHTML = welcomeHTML(); tabs.hidden = true; }
+  else if (S.view === "lesson") { app.innerHTML = lessonHTML(); tabs.hidden = true; afterLesson(); }
+  else {
+    app.innerHTML = S.tab === "learn" ? homeHTML() : S.tab === "phrases" ? phrasesHTML() : S.tab === "words" ? wordsHTML() : meHTML();
+    tabs.hidden = false;
+    tabs.innerHTML = [["learn", "Learn", ICON.learn], ["phrases", "Phrases", ICON.phrases], ["words", "Words", ICON.words], ["me", "Me", ICON.me]]
+      .map(([k, n, ic]) => `<button data-action="tab" data-tab="${k}" ${S.tab === k ? 'aria-current="page"' : ""}>${ic}<span>${n}</span></button>`).join("");
+  }
+  if (scrollTop) window.scrollTo(0, 0);
+}
+
+/* ---------- welcome ---------- */
+function welcomeHTML() {
+  const users = Object.values(db.users);
+  return `<div class="welcome">
+    ${kaka(120, true)}
+    <div class="hi ar" lang="ar">مرحبا!</div>
+    <h1>Learn Arabic<br><em>with Kaka</em></h1>
+    <p class="lead">Words, phrases and real conversations, with audio and speaking practice. Fifteen lessons, plus 100 everyday questions.</p>
+    ${users.length ? `<div class="who"><div class="lab">Welcome back</div>${users.map(u => `<button class="chip" data-action="pickUser" data-key="${esc(u.key)}">${esc(u.name)}</button>`).join("")}</div>` : ""}
+    <form id="nameForm" class="field" autocomplete="off">
+      <label for="nameIn">${users.length ? "Or start as someone new" : "What's your name? Kaka wants to say hi!"}</label>
+      <input id="nameIn" maxlength="24" placeholder="Your name" enterkeyhint="go" ${users.length ? "" : "autofocus"}>
+      <button class="btn" type="submit">Let's go!</button>
+    </form>
+    <p class="fine">Your progress is saved on this device, under your name.</p>
+  </div>`;
+}
+
+/* ---------- home ---------- */
+function tileHTML(i) {
+  const les = LESSONS[i], p = prog(i), open = unlocked(i);
+  const status = p.done ? `<span class="stars" aria-label="${p.stars} of 3 stars">${"★".repeat(p.stars)}${"☆".repeat(3 - p.stars)}</span>`
+    : !open ? "🔒" : (p.seen > 0 || p.learned) ? `<span class="pill">In progress</span>` : `<span class="pill soft">New</span>`;
+  return `<button class="tile ${open ? "" : "locked"} ${p.done ? "finished" : ""}" data-action="open" data-li="${i}">
+    <span class="ic">${les.icon}</span>
+    <span class="tx"><div class="tt">${i + 1}. ${esc(les.title)}</div><div class="mm">${les.items.length} words and phrases</div></span>${status}</button>`;
+}
+function homeHTML() {
+  const u = U(), done = LESSONS.filter((_, i) => prog(i).done).length;
+  const nxt = LESSONS.findIndex((_, i) => !prog(i).done);
+  const r = u.resume && !prog(u.resume.li).done ? u.resume : null;
+  const ci = r ? r.li : nxt;
+  let cont;
+  if (ci >= 0) {
+    const stepName = r ? { learn: "Learn", practice: "Practice", speak: "Speak" }[r.step] : "Learn";
+    cont = `<button class="cont lv${LESSONS[ci].level}" data-action="open" data-li="${ci}" data-resume="${r ? 1 : 0}"><div><div class="k">${r ? "Continue" : "Start"}</div><div class="t">Lesson ${ci + 1} · ${esc(LESSONS[ci].title)}</div><div class="m">${stepName}</div></div><span class="go">›</span></button>`;
+  } else cont = `<div class="cont done">All 15 lessons complete. Mashallah! 🎉</div>`;
+  const flat = PHRASES.flatMap(c => c.items), pd = flat[dayNum() % flat.length];
+  const levels = LEVELS.map((lv, k) => {
+    const idxs = LESSONS.map((_, i) => i).filter(i => LESSONS[i].level === k);
+    const d = idxs.filter(i => prog(i).done).length;
+    return `<section class="level lv${k}"><div class="lh"><h2>${lv.name}</h2><span>${d}/${idxs.length}</span></div><p>${lv.blurb}</p>${idxs.map(tileHTML).join("")}</section>`;
+  }).join("");
+  const bubble = BUBBLES[(dayNum() + u.streak.count + u.name.length) % BUBBLES.length];
+  return `<div id="home">
+    <div class="band">
+      <div class="toprow">${kaka(58, true)}<div class="brand"><div class="a">Learn Arabic</div><div class="b">with Kaka</div></div><span class="streak">🔥 ${u.streak.count} day${u.streak.count === 1 ? "" : "s"}</span></div>
+      <div class="bubble"><span class="ar" lang="ar">مرحبا</span><span>${esc(u.name)}! ${esc(bubble)}</span></div>
+    </div>
+    ${cont}
+    <button class="potd" data-action="potd"><div class="tx"><div class="k">Phrase of the day</div><div class="ar" lang="ar">${esc(pd[0])}</div><div class="b">${esc(pd[1])} · ${esc(pd[2])}</div></div><span class="mini" aria-hidden="true">🔊</span></button>
+    <div class="overall"><div class="row"><span>Your journey</span><span>${done} of ${LESSONS.length} lessons</span></div><div class="bar"><i style="width:${done / LESSONS.length * 100}%"></i></div></div>
+    ${levels}
+    <div class="extras">
+      <button class="extra x1" data-action="goPhrases" data-sub="fun"><div class="e">🎈</div><div class="t">Fun & useful phrases</div><div class="m">${flat.length} phrases</div></button>
+      <button class="extra x2" data-action="goPhrases" data-sub="qa"><div class="e">💬</div><div class="t">100 everyday Q&amp;A</div><div class="m">Ask and answer</div></button>
+    </div>
+  </div>`;
+}
+
+/* ---------- lesson shell ---------- */
+function startLesson(i, useResume) {
+  const p = prog(i), r = U().resume, n = LESSONS[i].items.length;
+  S.li = i; S.view = "lesson"; S.quiz = null; S.sp = null;
+  if (useResume && r && r.li === i) { S.step = r.step; S.idx = Math.min(r.idx || 0, n - 1); }
+  else { S.step = "learn"; S.idx = p.done ? 0 : Math.min(p.seen, n - 1); }
+  if (S.step === "practice") S.quiz = buildQuiz();
+  if (S.step === "speak") S.sp = newSpeak();
+  saveResume(); render(true);
+}
+function saveResume() { U().resume = { li: S.li, step: S.step, idx: S.idx }; saveDB(); }
+function setStep(step) {
+  stopAudio(); S.step = step;
+  if (step === "practice") S.quiz = buildQuiz();
+  if (step === "speak") S.sp = newSpeak();
+  saveResume(); render(true);
+}
+function lessonHead() {
+  const les = LESSONS[S.li];
+  return `<div class="lv${les.level}"><div class="lhead"><button class="iconbtn" data-action="back" aria-label="Back to lessons">${ICON.chev}</button>
+    <div class="lt"><div class="k">${LEVELS[les.level].name} · Lesson ${S.li + 1} of ${LESSONS.length}</div><div class="t">${esc(les.title)}</div></div></div>
+    <div class="steps">${[["learn", "Learn"], ["practice", "Practice"], ["speak", "Speak"]].map(([k, n]) => `<button class="step ${S.step === k ? "on" : ""}" data-action="step" data-step="${k}">${n}</button>`).join("")}</div>`;
+}
+function lessonHTML() {
+  let body;
+  if (S.step === "practice") { if (!S.quiz) S.quiz = buildQuiz(); body = quizHTML(); }
+  else if (S.step === "speak") { if (!S.sp) S.sp = newSpeak(); body = speakHTML(); }
+  else body = learnHTML();
+  return lessonHead() + body + `</div>`;
+}
+function afterLesson() {
+  if (S.step === "learn") {
+    fillCard();
+    const fc = $("#fc");
+    bindSwipe(fc, () => goCard(1), () => goCard(-1), () => playCurrent());
+    if (!U().hints.swipe && !reduceMotion) fc.classList.add("nudge");
+  }
+  if (S.step === "practice" && S.quiz && !S.quiz.done) {
+    const q = S.quiz.qs[S.quiz.i];
+    if (q.type === "listen" && S.quiz.answered === null) setTimeout(() => speak(q.item[0]), 250);
+  }
+}
+function back() { stopAudio(); saveResume(); S.view = "home"; S.tab = "learn"; render(true); }
+
+/* ---------- learn ---------- */
+function learnHTML() {
+  const les = LESSONS[S.li];
+  return `<div class="body">
+    ${hasVoice() ? "" : `<div class="notice">No Arabic voice found on this device. Use the “Hear online” links, or install an Arabic voice in your device's speech settings.</div>`}
+    <p class="tip">${esc(les.tip)}</p>
+    <div class="count"><span id="cnt"></span><div class="bar"><i id="cbar"></i></div></div>
+    <div class="fcard" id="fc" tabindex="0" aria-label="Flashcard. Tap to hear it. Swipe left or right to change card."></div>
+    <div class="hintline">Tap the card to hear it · Swipe ← → to move on</div>
+    <div class="navrow"><button class="btn ghost" data-action="prev" id="bprev">Back</button><button class="btn" data-action="next" id="bnext">Next</button></div>
+  </div>`;
+}
+function fillCard() {
+  const les = LESSONS[S.li], it = les.items[S.idx], n = les.items.length, u = U(), p = curProg();
+  $("#fc").innerHTML = `<button class="roundbtn" data-action="play" aria-label="Play pronunciation">🔊</button>
+    <div class="ar big ${scriptSize(it[0])}" lang="ar">${esc(it[0])}</div>
+    ${u.settings.translit ? `<div class="tr">${esc(it[1])}</div>` : ""}
+    <div class="en">${esc(it[2])}</div>
+    <div class="links">${onlineLinks(it[0])}</div>`;
+  $("#cnt").textContent = (S.idx + 1) + " / " + n;
+  $("#cbar").style.width = ((S.idx + 1) / n * 100) + "%";
+  $("#bprev").disabled = S.idx === 0;
+  const last = S.idx === n - 1, bn = $("#bnext");
+  bn.textContent = last ? "Start practice" : "Next"; bn.dataset.action = last ? "toPractice" : "next";
+  if (S.idx > p.seen) p.seen = S.idx;
+  if (last) p.learned = true;
+  saveResume();
+}
+function playCurrent() { if (!speak(LESSONS[S.li].items[S.idx][0])) noVoice(); }
+function goCard(delta) {
+  const les = LESSONS[S.li], n = les.items.length, ni = S.idx + delta, fc = $("#fc");
+  if (!U().hints.swipe) { U().hints.swipe = true; saveDB(); fc.classList.remove("nudge"); }
+  if (ni < 0 || ni >= n) { if (ni >= n) toast("Last card! Tap “Start practice”."); return; }
+  const out = delta > 0 ? -110 : 110, t = reduceMotion ? 0 : 170;
+  fc.style.transition = "transform .17s ease, opacity .17s ease";
+  fc.style.transform = `translateX(${out}%) rotate(${out / 14}deg)`; fc.style.opacity = "0";
+  setTimeout(() => {
+    S.idx = ni; fillCard();
+    fc.style.transition = "none"; fc.style.transform = `translateX(${-out / 2}%)`;
+    void fc.offsetWidth;
+    fc.style.transition = "transform .2s ease, opacity .2s ease"; fc.style.transform = ""; fc.style.opacity = "1";
+    if (U().settings.auto) speak(les.items[S.idx][0]);
+  }, t);
+}
+function bindSwipe(el, onLeft, onRight, onTap) {
+  let sx = 0, dx = 0, drag = false;
+  el.addEventListener("pointerdown", e => {
+    if (e.target.closest("button,a")) return;
+    drag = true; sx = e.clientX; dx = 0; el.style.transition = "none";
+    try { el.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  el.addEventListener("pointermove", e => { if (!drag) return; dx = e.clientX - sx; el.style.transform = `translateX(${dx}px) rotate(${dx / 40}deg)`; });
+  el.addEventListener("pointerup", () => {
+    if (!drag) return; drag = false; el.style.transition = "transform .2s ease"; el.style.transform = "";
+    if (Math.abs(dx) < 8) onTap(); else if (dx < -60) onLeft(); else if (dx > 60) onRight();
+  });
+  el.addEventListener("pointercancel", () => { drag = false; el.style.transform = ""; });
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onTap(); } });
+}
+document.addEventListener("keydown", e => {
+  if (S.view !== "lesson" || S.step !== "learn" || e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowRight") goCard(1);
+  if (e.key === "ArrowLeft") goCard(-1);
+});
+
+/* ---------- practice ---------- */
+function buildQuiz() {
+  const items = LESSONS[S.li].items, vc = hasVoice();
+  const others = LESSONS.flatMap((x, i) => i === S.li ? [] : x.items);
+  const distract = (correct, key) => {
+    const pool = shuffle(items.filter(x => x !== correct)).concat(shuffle(others.slice()));
+    const seen = new Set([correct[key]]), out = [];
+    for (const x of pool) { if (!seen.has(x[key])) { seen.add(x[key]); out.push(x); } if (out.length === 3) break; }
+    return out;
+  };
+  const chosen = shuffle(items.slice()).slice(0, Math.min(items.length >= 24 ? 12 : 10, items.length));
+  const types = vc ? ["listen", "see", "pick"] : ["see", "pick"];
+  const qs = chosen.map((it, k) => {
+    const type = types[k % types.length], key = type === "pick" ? 0 : 2;
+    const opts = shuffle([it].concat(distract(it, key)));
+    return { type, item: it, opts, answer: opts.indexOf(it) };
+  });
+  return { qs, i: 0, correct: 0, answered: null, done: false };
+}
+function quizHTML() {
+  const Q = S.quiz;
+  if (Q.done) return resultsHTML();
+  const q = Q.qs[Q.i], it = q.item, ans = Q.answered !== null, n = Q.qs.length;
+  let prompt;
+  if (q.type === "listen") prompt = `<button class="bigplay" data-action="qplay" aria-label="Play audio">🔊</button><div class="qlab">What does this mean?</div>`;
+  else if (q.type === "see") prompt = `<div class="ar big ${scriptSize(it[0])}" lang="ar">${esc(it[0])}</div>${ans && U().settings.translit ? `<div class="tr">${esc(it[1])}</div>` : ""}<div class="qlab">What does this mean?</div>`;
+  else prompt = `<div class="qlab">Which one means</div><div class="qen">${esc(it[2])}</div>`;
+  const opts = q.opts.map((o, k) => {
+    const cls = ans ? (k === q.answer ? "right" : k === Q.answered ? "wrong" : "") : "";
+    const label = q.type === "pick" ? `<span class="ar" lang="ar">${esc(o[0])}</span>` : esc(o[2]);
+    return `<button class="opt ${cls}" data-action="answer" data-k="${k}" ${ans ? "disabled" : ""}>${label}</button>`;
+  }).join("");
+  const ok = ans && Q.answered === q.answer;
+  const fb = ans ? `<div class="fb ${ok ? "good" : "bad"}">${ok ? "Correct! 🎉" : "Not quite."}<small><span class="ar" lang="ar">${esc(it[0])}</span> · ${esc(it[1])} · ${esc(it[2])}</small></div>
+    <button class="btn" style="width:100%" data-action="qnext">${Q.i === n - 1 ? "See results" : "Continue"}</button>` : "";
+  return `<div class="body">
+    <div class="count"><span>${Q.i + 1} / ${n}</span><div class="bar"><i style="width:${(Q.i + (ans ? 1 : 0)) / n * 100}%"></i></div></div>
+    <div class="qcard">${prompt}</div><div class="opts">${opts}</div>${fb}</div>`;
+}
+function answer(k) {
+  const Q = S.quiz; if (Q.answered !== null) return;
+  const q = Q.qs[Q.i]; Q.answered = k; if (k === q.answer) Q.correct++;
+  render(false); speak(q.item[0]);
+}
+function qnext() {
+  const Q = S.quiz; Q.answered = null; Q.i++;
+  if (Q.i >= Q.qs.length) { Q.done = true; finishQuiz(); }
+  render(true);
+}
+function finishQuiz() {
+  const Q = S.quiz, p = curProg(); Q.pct = Math.round(Q.correct / Q.qs.length * 100);
+  Q.pass = Q.pct >= 70; Q.stars = Q.pct >= 90 ? 3 : Q.pct >= 80 ? 2 : Q.pass ? 1 : 0;
+  Q.msg = Q.pass ? pick(WIN) : pick(TRY);
+  p.best = Math.max(p.best, Q.pct);
+  if (Q.pass) { p.done = true; p.learned = true; p.stars = Math.max(p.stars, Q.stars); }
+  touchStreak(); saveDB();
+}
+function resultsHTML() {
+  const Q = S.quiz, hasNext = S.li < LESSONS.length - 1;
+  return `<div class="body results">
+    ${kaka(96, true)}
+    <div class="score popin">${Q.pct}%</div>
+    <span class="stars popin">${"★".repeat(Q.stars)}${"☆".repeat(3 - Q.stars)}</span>
+    <h2>${esc(Q.msg)}</h2>
+    <p>${Q.correct} of ${Q.qs.length} correct. ${Q.pass ? (hasNext ? "The next lesson is unlocked." : "You finished the whole course!") : "You need 70% to pass. Review the cards and try again."}</p>
+    <div class="stack">
+      ${Q.pass && hasNext ? `<button class="btn" data-action="nextLesson">Next lesson</button>` : ""}
+      ${Q.pass ? `<button class="btn soft" data-action="step" data-step="speak">Practice speaking</button>` : `<button class="btn" data-action="retry">Try again</button><button class="btn soft" data-action="step" data-step="learn">Review cards</button>`}
+      <button class="btn ghost" data-action="back">Back to lessons</button>
+    </div></div>`;
+}
+
+/* ---------- speak ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null;
+const newSpeak = () => ({ items: shuffle(LESSONS[S.li].items.slice()).slice(0, 10), i: 0, ok: 0, res: null, msg: null, counted: false });
+function speakHTML() {
+  const sp = S.sp, n = sp.items.length;
+  if (sp.i >= n) {
+    const p = curProg(); p.spoke = Math.max(p.spoke, sp.ok); saveDB();
+    return `<div class="body results">${kaka(96, true)}<div class="score popin">${sp.ok}/${n}</div><h2>Said clearly!</h2><p>Practice makes it smoother. Come back any time.</p>
+      <div class="stack"><button class="btn" data-action="back">Back to lessons</button><button class="btn soft" data-action="step" data-step="speak">Go again</button></div></div>`;
+  }
+  const it = sp.items[sp.i], r = sp.res;
+  const res = r ? `<div class="v ${r.cls}">${esc(r.label)}</div><div class="h">I heard: <b>${esc(r.heard || "(nothing)")}</b></div>` : (sp.msg ? `<div class="v bad">${esc(sp.msg.t)}</div><div class="h">${esc(sp.msg.d || "")}</div>` : "");
+  return `<div class="body">
+    <div class="count"><span>${sp.i + 1} / ${n}</span><div class="bar"><i style="width:${sp.i / n * 100}%"></i></div></div>
+    <div class="fcard" style="cursor:default;min-height:270px">
+      <button class="roundbtn" data-action="splay" aria-label="Play pronunciation">🔊</button>
+      <div class="ar big ${scriptSize(it[0])}" lang="ar">${esc(it[0])}</div>
+      <div class="tr">${esc(it[1])}</div><div class="en">${esc(it[2])}</div>
+      <div class="links">${onlineLinks(it[0])}</div>
+    </div>
+    <button class="btn mic ${S.listening ? "rec" : ""}" style="margin-top:14px" data-action="mic">${S.listening ? "⏹ Listening… tap to stop" : "🎤 Say it"}</button>
+    <div class="result" aria-live="polite">${res}</div>
+    <div class="navrow" style="margin-top:12px"><button class="btn ghost" data-action="spnext">Skip</button><button class="btn" data-action="spnext">Next</button></div>
+  </div>`;
+}
+function listen() {
+  if (!SR) { S.sp.res = null; S.sp.msg = { t: "Speaking practice isn't supported here", d: "Try Chrome, Edge or Safari. Firefox has no speech recognition." }; render(false); return; }
+  if (S.listening && recog) { recog.stop(); return; }
+  stopAudio();
+  const it = S.sp.items[S.sp.i];
+  recog = new SR(); recog.lang = SPEECH; recog.interimResults = false; recog.maxAlternatives = 3;
+  recog.onstart = () => { S.listening = true; render(false); };
+  recog.onend = () => { S.listening = false; render(false); };
+  recog.onerror = e => {
+    if (e.error === "aborted") return;
+    const m = { "not-allowed": ["Mic access is blocked", "Allow the microphone for this site in your browser settings."],
+      "service-not-allowed": ["Mic access is blocked", "Allow the microphone for this site in your browser settings."],
+      "no-speech": ["Didn't catch anything", "Tap the mic and try again a little louder."],
+      "language-not-supported": ["Arabic isn't supported by this browser's recognizer", "Try Chrome on desktop or Android."] }[e.error];
+    S.sp.res = null; S.sp.msg = m ? { t: m[0], d: m[1] } : { t: "Couldn't listen (" + e.error + ")", d: "Check your connection and try again." };
+  };
+  recog.onresult = e => {
+    const alts = Array.from(e.results[0]).map(a => a.transcript);
+    let best = -1, heard = alts[0] || "";
+    alts.forEach(t => { const s = similarity(t, it); if (s > best) { best = s; heard = t; } });
+    const cls = best >= 0.85 ? "good" : best >= 0.6 ? "warn" : "bad";
+    const label = (best >= 0.85 ? "Nailed it" : best >= 0.6 ? "Close" : "Try again") + " · " + Math.round(best * 100) + "%";
+    if (best >= 0.7 && !S.sp.counted) { S.sp.ok++; S.sp.counted = true; }
+    S.sp.res = { cls, label, heard }; S.sp.msg = null;
+  };
+  try { recog.start(); } catch (err) {}
+}
+function spMove() {
+  if (recog && S.listening) { try { recog.abort(); } catch (er) {} S.listening = false; }
+  S.sp.i++; S.sp.res = null; S.sp.msg = null; S.sp.counted = false; render(true);
+}
+
+/* ---------- phrases tab ---------- */
+function funListHTML() {
+  const q = S.pq.trim(), ql = q.toLowerCase(); let out = "", total = 0;
+  PHRASES.forEach(c => {
+    const rows = c.items.map((it, ii) => [it, ii]).filter(([it]) => !q || it[2].toLowerCase().includes(ql) || it[1].toLowerCase().includes(ql) || it[0].includes(q));
+    if (!rows.length) return; total += rows.length;
+    const ci = PHRASES.indexOf(c);
+    out += `<div class="wgroup"><h3>${c.icon} ${esc(c.cat)}</h3>${rows.map(([it, ii]) =>
+      `<button class="phr" data-action="phplay" data-ci="${ci}" data-ii="${ii}"><span class="tx"><div class="ar" lang="ar">${esc(it[0])}</div><div class="a">${esc(it[1])}</div><div class="b">${esc(it[2])}</div></span><span class="mini" aria-hidden="true">🔊</span></button>`).join("")}</div>`;
+  });
+  return total ? out : `<div class="empty">No matches. Try an English word.</div>`;
+}
+function qaListHTML() {
+  const q = S.pq.trim(), ql = q.toLowerCase(); let out = "", total = 0, n = 0;
+  QA_THEMES.forEach((th, ti) => {
+    let rows = "";
+    th.items.forEach((it, ii) => {
+      n++;
+      if (q && !(it[2] + " " + it[5] + " " + it[1] + " " + it[4]).toLowerCase().includes(ql) && !(it[0] + it[3]).includes(q)) return;
+      total++;
+      const open = !!S.qaOpen[ti + "-" + ii];
+      rows += `<div class="qa"><div class="n">Question ${n}</div>
+        <div class="qrow"><button class="mini" data-action="qaplay" data-ti="${ti}" data-ii="${ii}" data-part="q" aria-label="Play question">🔊</button><div><div class="ar" lang="ar">${esc(it[0])}</div><div class="a">${esc(it[1])}</div><div class="b">${esc(it[2])}</div></div></div>
+        ${open ? `<div class="arow"><button class="mini" data-action="qaplay" data-ti="${ti}" data-ii="${ii}" data-part="a" aria-label="Play answer">🔊</button><div><div class="ar" lang="ar">${esc(it[3])}</div><div class="a">${esc(it[4])}</div><div class="b">${esc(it[5])}</div></div></div>`
+               : `<button class="reveal" data-action="qatoggle" data-ti="${ti}" data-ii="${ii}">Show sample answer</button>`}</div>`;
+    });
+    if (rows) out += `<div class="wgroup"><h3>${th.icon} ${esc(th.name)}</h3>${rows}</div>`;
+  });
+  return total ? out : `<div class="empty">No matches. Try an English word.</div>`;
+}
+function phrasesHTML() {
+  const fun = S.sub === "fun", total = PHRASES.reduce((a, c) => a + c.items.length, 0);
+  return `<div class="page"><h1>${fun ? "Fun & useful phrases" : "100 everyday Q&amp;A"}</h1>
+    <p class="sub">${fun ? "Say these out loud. Tap any phrase to hear it." : "Questions use the masculine “you”. Tap “Show sample answer” after you try."}</p>
+    <div class="tabs2"><button data-action="sub" data-sub="fun" aria-pressed="${fun}">Phrases (${total})</button><button data-action="sub" data-sub="qa" aria-pressed="${!fun}">Q&amp;A (100)</button></div>
+    <input id="pq" class="search" type="search" placeholder="Search in English or Arabic" value="${esc(S.pq)}" aria-label="Search">
+    <div id="plist">${fun ? funListHTML() : qaListHTML()}</div></div>`;
+}
+
+/* ---------- words tab ---------- */
+function wordsListHTML() {
+  const q = S.q.trim(), ql = q.toLowerCase(); let out = "", total = 0;
+  LESSONS.forEach((les, li) => {
+    const rows = les.items.map((it, ii) => [it, ii]).filter(([it]) => !q || it[2].toLowerCase().includes(ql) || it[1].toLowerCase().includes(ql) || it[0].includes(q));
+    if (!rows.length) return; total += rows.length;
+    out += `<div class="wgroup"><h3>${les.icon} ${li + 1}. ${esc(les.title)}</h3>${rows.map(([it, ii]) =>
+      `<button class="wrow" data-action="wplay" data-li="${li}" data-ii="${ii}"><span class="ar" lang="ar">${esc(it[0])}</span><span class="tx"><div class="a">${esc(it[1])}</div><div class="b">${esc(it[2])}</div></span><span aria-hidden="true">🔊</span></button>`).join("")}</div>`;
+  });
+  return total ? out : `<div class="empty">No matches. Try an English word.</div>`;
+}
+function wordsHTML() {
+  const total = LESSONS.reduce((a, x) => a + x.items.length, 0);
+  return `<div class="page"><h1>All words</h1><p class="sub">${total} words and phrases from the lessons.</p>
+    <input id="wq" class="search" type="search" placeholder="Search in English or Arabic" value="${esc(S.q)}" aria-label="Search words">
+    <div id="wlist">${wordsListHTML()}</div></div>`;
+}
+
+/* ---------- me ---------- */
+function sw(key, title, sub) {
+  return `<div class="row2"><div>${title}<small>${sub}</small></div><button class="sw" role="switch" aria-checked="${U().settings[key]}" aria-label="${title}" data-action="toggle" data-key="${key}"></button></div>`;
+}
+function meHTML() {
+  const u = U(), done = LESSONS.filter((_, i) => prog(i).done).length, v = voice();
+  return `<div class="page"><h1>Me</h1>
+    <div class="prof">${kaka(64, false)}<div><div class="n">${esc(u.name)}</div><div class="m">${done}/15 lessons · 🔥 ${u.streak.count} day streak</div></div></div>
+    <div class="card2"><h2>Settings</h2>
+      ${sw("translit", "Show transliteration", "Latin spelling under the Arabic")}
+      ${sw("auto", "Auto-play audio", "Hear each card as you swipe")}
+      ${sw("slow", "Slow speech", "Slower pronunciation for beginners")}
+      ${sw("unlockAll", "Unlock all lessons", "Skip the lesson order")}
+    </div>
+    <div class="card2"><h2>Arabic voice on this device</h2><div class="row2"><div>${v ? esc(v.name) : "Not found"}<small>${v ? "Audio is ready." : "Use “Hear online” links, or install an Arabic voice in your device's speech settings."}</small></div></div></div>
+    <div class="card2"><h2>Learners</h2>
+      <button class="btn ghost" style="width:100%;margin-bottom:10px" data-action="switchUser">Switch or add learner</button>
+      <button class="btn ${S.resetArmed ? "warn" : "ghost"}" style="width:100%" data-action="reset">${S.resetArmed ? "Tap again to erase " + esc(u.name) + "'s progress" : "Reset my progress"}</button>
+      ${S.volatile ? `<p class="fine">Your browser blocked saving. Progress will be lost when you close this page.</p>` : ""}
+    </div>
+    <div class="card2 links2"><h2>Free resources</h2>
+      <a href="https://tatoeba.org" target="_blank" rel="noopener">Tatoeba<small>Free example sentences with translations</small></a>
+      <a href="https://en.wiktionary.org" target="_blank" rel="noopener">Wiktionary<small>Free dictionary with pronunciation and grammar</small></a>
+      <a href="https://forvo.com" target="_blank" rel="noopener">Forvo<small>Native speakers saying words</small></a>
+      <a href="https://commonvoice.mozilla.org" target="_blank" rel="noopener">Mozilla Common Voice<small>Open voice recordings</small></a>
+    </div>
+    <p class="fine">Arabic here is Modern Standard Arabic, with a few everyday spoken phrases. Real speech varies by country. Have a native speaker check anything you plan to rely on.</p>
+  </div>`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-action]"); if (!a) return;
+  const d = a.dataset;
+  switch (d.action) {
+    case "pickUser": db.lastUser = d.key; S.user = d.key; S.tab = "learn"; S.view = "home"; saveDB(); touchStreak(); render(true); break;
+    case "tab": S.tab = d.tab; S.resetArmed = false; render(true); break;
+    case "goPhrases": S.tab = "phrases"; S.sub = d.sub; S.pq = ""; render(true); break;
+    case "sub": S.sub = d.sub; S.pq = ""; render(false); break;
+    case "open": {
+      const i = +d.li;
+      if (!unlocked(i)) { toast("Finish lesson " + i + " first, or unlock all in Me."); break; }
+      startLesson(i, d.resume === "1"); break;
+    }
+    case "back": back(); break;
+    case "step": setStep(d.step); break;
+    case "play": playCurrent(); break;
+    case "next": goCard(1); break;
+    case "prev": goCard(-1); break;
+    case "toPractice": setStep("practice"); break;
+    case "qplay": speak(S.quiz.qs[S.quiz.i].item[0]) || noVoice(); break;
+    case "answer": answer(+d.k); break;
+    case "qnext": qnext(); break;
+    case "retry": S.quiz = buildQuiz(); render(true); break;
+    case "nextLesson": startLesson(S.li + 1, false); break;
+    case "splay": speak(S.sp.items[S.sp.i][0]) || noVoice(); break;
+    case "mic": listen(); break;
+    case "spnext": spMove(); break;
+    case "wplay": speak(LESSONS[+d.li].items[+d.ii][0]) || noVoice(); break;
+    case "phplay": speak(PHRASES[+d.ci].items[+d.ii][0]) || noVoice(); break;
+    case "potd": { const f = PHRASES.flatMap(c => c.items); speak(f[dayNum() % f.length][0]) || noVoice(); break; }
+    case "qaplay": { const it = QA_THEMES[+d.ti].items[+d.ii]; speak(d.part === "q" ? it[0] : it[3]) || noVoice(); break; }
+    case "qatoggle": S.qaOpen[d.ti + "-" + d.ii] = true; $("#plist").innerHTML = qaListHTML(); break;
+    case "toggle": U().settings[d.key] = !U().settings[d.key]; saveDB(); render(false); break;
+    case "switchUser": stopAudio(); S.user = null; render(true); break;
+    case "reset":
+      if (!S.resetArmed) { S.resetArmed = true; render(false); setTimeout(() => { if (S.resetArmed) { S.resetArmed = false; if (S.user && S.view === "home" && S.tab === "me") render(false); } }, 4000); }
+      else { U().progress = {}; U().resume = null; U().hints.swipe = false; S.resetArmed = false; saveDB(); toast("Progress reset"); render(true); }
+      break;
+  }
+});
+document.addEventListener("submit", e => { if (e.target.id === "nameForm") { e.preventDefault(); login($("#nameIn").value); } });
+document.addEventListener("input", e => {
+  if (e.target.id === "wq") { S.q = e.target.value; $("#wlist").innerHTML = wordsListHTML(); }
+  if (e.target.id === "pq") { S.pq = e.target.value; $("#plist").innerHTML = S.sub === "fun" ? funListHTML() : qaListHTML(); }
+});
+
+/* ---------- init ---------- */
+loadDB();
+if (synthOK) { loadVoices(); speechSynthesis.addEventListener("voiceschanged", () => { loadVoices(); if (S.user && S.tab === "me" && S.view === "home") render(false); }); }
+if (db.lastUser && db.users[db.lastUser]) { S.user = db.lastUser; touchStreak(); }
+render(true);
+
+})();
+</script>
+</body>
+</html>
 
